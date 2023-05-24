@@ -1,0 +1,50 @@
+app embeddings {
+  wasp: {
+    version: "^0.10.3"
+  },
+  auth: {
+    methods: {
+      // NOTE:
+      usernameAndPassword: {},
+      // google: {}, 
+      // email: {},
+    },
+    onAuthFailedRedirectTo: "/login",
+    userEntity: User, 
+  },
+  db: { system: PostgreSQL },
+  dependencies: [
+    ("openai", "3.2.1"),
+    ("gpt-3-encoder", "^1.1.4")
+  ],
+  title: "embeddings"
+}
+
+entity Text {=psl
+  id              Int         @id @default(autoincrement())
+  title           String
+  content         String
+  vector          Unsupported("vector (1536)") 
+psl=}
+
+entity User {=psl
+  id              Int         @id @default(autoincrement())
+  username        String      @unique
+  password        String
+  role            String      
+psl=}
+
+route RootRoute { path: "/", to: MainPage }
+page MainPage {
+  component: import Main from "@client/MainPage.jsx"
+}
+
+action generateEmbeddings {
+  fn: import { generateEmbeddings } from "@server/generateEmbeddings.js",
+  entities: [Text]
+}
+
+query searchEmbeddings {
+  fn: import { searchEmbeddings } from "@server/searchEmbeddings.js",
+  entities: [Text]
+}

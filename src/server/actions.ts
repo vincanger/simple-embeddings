@@ -1,0 +1,1 @@
+import prismaClient from '@wasp/dbClient';
