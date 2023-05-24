@@ -137,7 +137,6 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
 
       const [{ embedding }] = embeddingResponse.data.data;
 
-      // await prismaClient.$queryRaw`INSERT INTO public."Text"("title", "content", "vector") VALUES (${chunkTitle}, ${JSON.stringify(chunkContent)}, ${embedding});`;
       await context.entities.Text.create({
         data: {
           title: chunkTitle,
