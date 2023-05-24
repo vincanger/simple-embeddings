@@ -35,7 +35,7 @@ const MainPage = () => {
           {data && data.map((result, index) => (
             <div key={index} className="result">
               <div className="result-title">TITLE: {result.title}</div>
-              <div className="result-title">CONTENT: {JSON.parse(result.content)}</div>
+              <div className="result-title">CONTENT: {result.content}</div>
               
             </div>
           ))}

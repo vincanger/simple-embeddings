@@ -12,7 +12,7 @@ app embeddings {
     onAuthFailedRedirectTo: "/login",
     userEntity: User, 
   },
-  db: { system: PostgreSQL },
+  // db: { system: PostgreSQL },
   dependencies: [
     ("openai", "3.2.1"),
     ("gpt-3-encoder", "^1.1.4")
@@ -24,7 +24,7 @@ entity Text {=psl
   id              Int         @id @default(autoincrement())
   title           String
   content         String
-  vector          Unsupported("vector (1536)") 
+  embeddings      String
 psl=}
 
 entity User {=psl

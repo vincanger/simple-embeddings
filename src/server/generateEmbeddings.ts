@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { encode } from 'gpt-3-encoder';
-import prismaClient from '@wasp/dbClient.js' // TODO: change https://wasp-lang.dev/docs/language/features#using-entities-directly to include .js extension on import
 import { openai } from './utils.js';
 import type { GenerateEmbeddings } from '@wasp/actions/types';
 
@@ -107,6 +106,7 @@ const contentChunked: ChunkedFiles = fileContents.map((file) => {
   return chunkContent(file);
 });
 
+// we can write the file to the root directory of the wasp project for debugging purposes
 fs.writeFileSync('../../../chunkedTextForEmbeddings.json', JSON.stringify(contentChunked, null, 2));
 
 export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_args, context) => {
@@ -137,7 +137,14 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
 
       const [{ embedding }] = embeddingResponse.data.data;
 
-      await prismaClient.$queryRaw`INSERT INTO public."Text"("title", "content", "vector") VALUES (${chunkTitle}, ${JSON.stringify(chunkContent)}, ${embedding});`;
+      // await prismaClient.$queryRaw`INSERT INTO public."Text"("title", "content", "vector") VALUES (${chunkTitle}, ${JSON.stringify(chunkContent)}, ${embedding});`;
+      await context.entities.Text.create({
+        data: {
+          title: chunkTitle,
+          content: chunkContent,
+          embeddings: JSON.stringify(embedding),
+        },
+      });
 
     }
   }
