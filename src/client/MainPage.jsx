@@ -9,7 +9,7 @@ const MainPage = () => {
   const [query, setQuery] = useState("");
   const [isSearchEnabled, setIsSearchEnabled] = useState(false);
 
-  const { data } = useQuery(searchEmbeddings, { inputQuery: query, matchCount: 3}, { enabled: isSearchEnabled });
+  const { data } = useQuery(searchEmbeddings, { inputQuery: query }, { enabled: isSearchEnabled });
 
   const handleClick = async() => {
     await generateEmbeddings();
@@ -35,7 +35,7 @@ const MainPage = () => {
           {data && data.map((result, index) => (
             <div key={index} className="result">
               <div className="result-title">TITLE: {result.title}</div>
-              <div className="result-title">CONTENT: {JSON.parse(result.content)}</div>
+              <div className="result-title">CONTENT: {result.content}</div>
               
             </div>
           ))}

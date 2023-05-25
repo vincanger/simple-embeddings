@@ -1,12 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import { encode } from 'gpt-3-encoder';
-import prismaClient from '@wasp/dbClient.js' // TODO: change https://wasp-lang.dev/docs/language/features#using-entities-directly to include .js extension on import
-import { openai } from './utils.js';
+import prismaClient from '@wasp/dbClient.js'; // TODO: change https://wasp-lang.dev/docs/language/features#using-entities-directly to include .js extension on import
+import { openai, initPinecone } from './utils.js';
+import type { Vector } from '@pinecone-database/pinecone';
 import type { GenerateEmbeddings } from '@wasp/actions/types';
 
 /**
- * this is the max number of tokens we want to chunk the text into 
+ * this is the max number of tokens we want to chunk the text into
  * before we create an embedding for it.
  * see: https://www.npmjs.com/package/gpt-3-encoder
  */
@@ -35,7 +36,7 @@ const chunkContent = (file: FileToEmbed) => {
   const { title, content } = file;
 
   const contentTokens = encode(content).length;
-  
+
   let contentChunks = [];
 
   if (contentTokens > CHUNK_SIZE) {
@@ -97,10 +98,10 @@ const chunkContent = (file: FileToEmbed) => {
 };
 
 type ChunkedFiles = {
-    title: string;
-    content: string;
-    content_length: any;
-    content_tokens: number;
+  title: string;
+  content: string;
+  content_length: any;
+  content_tokens: number;
 }[][];
 
 const contentChunked: ChunkedFiles = fileContents.map((file) => {
@@ -110,10 +111,25 @@ const contentChunked: ChunkedFiles = fileContents.map((file) => {
 fs.writeFileSync('../../../chunkedTextForEmbeddings.json', JSON.stringify(contentChunked, null, 2));
 
 export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_args, context) => {
-  console.log('generateEmbeddings [[ starting... ]] ')
+  const vectors: Vector[] = [];
+  const pinecone = await initPinecone();
+
+  // make sure to create an index before you upsert embeddings
+  const indexes = await pinecone.listIndexes();
+  if (!indexes.includes('embeds-test')) {
+    await pinecone.createIndex({
+      createRequest: {
+        name: 'embeds-test',
+        dimension: 1536,
+      },
+    });
+  }
+
+  const pineconeIndex = pinecone.Index('embeds-test');
+
+  console.log('generateEmbeddings [[ starting... ]] ');
   for (let i = 0; i < contentChunked.length; i++) {
     for (let j = 0; j < contentChunked[i].length; j++) {
-      
       const text = contentChunked[i];
       const { title: chunkTitle, content: chunkContent } = text[j];
 
@@ -126,7 +142,7 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
       });
 
       if (!!existingEmbedding) {
-        console.log('skipping this chunk -- embedding already exists in the database')
+        console.log('skipping this chunk -- embedding already exists in the database');
         continue;
       }
 
@@ -137,10 +153,27 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
 
       const [{ embedding }] = embeddingResponse.data.data;
 
-      await prismaClient.$queryRaw`INSERT INTO public."Text"("title", "content", "vector") VALUES (${chunkTitle}, ${JSON.stringify(chunkContent)}, ${embedding});`;
+      const vector: Vector = {
+        id: chunkTitle,
+        values: embedding,
+      };
 
+      vectors.push(vector);
+
+      await context.entities.Text.create({
+        data: {
+          title: chunkTitle,
+          content: chunkContent,
+        },
+      });
     }
   }
 
-  return 'Text embeddings generated.'
+  await pineconeIndex.upsert({
+    upsertRequest: {
+      vectors,
+    },
+  });
+
+  return 'Text embeddings generated.';
 };

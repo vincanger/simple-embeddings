@@ -1,11 +1,14 @@
 import { openai } from './utils.js';
 import prismaClient from '@wasp/dbClient.js';
+import { initPinecone } from './utils.js';
 import type { Text } from '@wasp/entities';
 import type { SearchEmbeddings } from '@wasp/queries/types';
 
-type Args = { inputQuery: string; similarityThreshold: number, matchCount: number };
+type Args = { inputQuery: string };
 
-export const searchEmbeddings: SearchEmbeddings<Args, Text> = async ({ inputQuery, similarityThreshold = 0.01, matchCount = 5 }) => {
+export const searchEmbeddings: SearchEmbeddings<Args, Text[]> = async ({ inputQuery }, context) => {
+  const pinecone = await initPinecone();
+
   const res = await openai.createEmbedding({
     model: 'text-embedding-ada-002',
     input: inputQuery,
@@ -13,10 +16,30 @@ export const searchEmbeddings: SearchEmbeddings<Args, Text> = async ({ inputQuer
 
   const embedding = res.data.data[0].embedding;
 
-  /** 
-   * NOTE: the CAST() function is used to convert the input values to the correct data types
-   * that our Postgres embed_search() function expects. If you didn't set this up on Supabase yet, 
-   * check the README.md file for instructions.
-   */
-  return await prismaClient.$queryRaw`SELECT * FROM public.embed_search(query_embedding := CAST(${embedding} as vector), similarity_threshold := CAST(${similarityThreshold} as double precision), match_count := CAST(${matchCount} as integer));`;
+  const indexes = await pinecone.listIndexes();
+  console.log('indexes-->>', indexes);
+
+  const index = pinecone.Index('embeds-test');
+  const queryRequest = {
+    vector: embedding,
+    topK: 10,
+    includeValues: false,
+    includeMetadata: false,
+  };
+  const queryResponse = await index.query({ queryRequest });
+
+  let matches: Text[] = [];
+  if (queryResponse.matches?.length) {
+    const textChunks = await Promise.all(
+      queryResponse.matches.map(async (match) => {
+        return await context.entities.Text.findFirst({
+          where: {
+            title: match.id,
+          },
+        });
+      })
+    );
+    matches = textChunks.filter((textChunk) => !!textChunk) as Text[];
+  }
+  return matches;
 };
