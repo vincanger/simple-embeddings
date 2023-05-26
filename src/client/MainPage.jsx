@@ -8,11 +8,14 @@ import getFilesToEmbed from '@wasp/queries/getFilesToEmbed';
 
 const MainPage = () => {
   const [query, setQuery] = useState('');
-  const [isSearchEnabled, setIsSearchEnabled] = useState(false);
   const [isEmbedding, setIsEmbedding] = useState(false);
   const [isEmbedded, setIsEmbedded] = useState(false);
 
-  const { data } = useQuery(searchEmbeddings, { inputQuery: query }, { enabled: isSearchEnabled });
+  const { data, isFetching, refetch } = useQuery(
+    searchEmbeddings,
+    { inputQuery: query },
+    { enabled: false }
+  );
   const { data: filesToEmed } = useQuery(getFilesToEmbed);
 
   const handleClick = async () => {
@@ -22,8 +25,11 @@ const MainPage = () => {
     setIsEmbedded(true);
   };
 
+  const handleSearch = async (event) => {
+    await refetch();
+  }
+
   const handleChange = (event) => {
-    setIsSearchEnabled(false);
     setQuery(event.target.value);
   };
 
@@ -42,20 +48,20 @@ const MainPage = () => {
           </div>
           <div className='flex space-x-12 justify-center w-full'>
             <div className='flex flex-col rounded-lg border border-neutral-700 p-7 w-full'>
-              {filesToEmed && filesToEmed.length > 0 && (
-                <>
-                  <div className='flex items-center space-x-2'>
-                    <div className='font-bold'> 📁 Files to embed </div>{' '}
-                    <div className='italic opacity-80'> ./src/shared/docs:</div>
-                  </div>
-                  <ul className='mb-4 indent-4'>
-                    {filesToEmed.map((file, index) => (
-                      <li className='' key={index}>
-                        * {file}
-                      </li>
-                    ))}
-                  </ul>
-                </>
+              <div className='flex items-center space-x-2'>
+                <div className='font-bold'> 📁 Files to embed </div>{' '}
+                <div className='italic opacity-80'> ./src/shared/docs:</div>
+              </div>
+              {filesToEmed && filesToEmed.length > 0 ? (
+                <ul className='mb-4 indent-4'>
+                  {filesToEmed.map((file, index) => (
+                    <li className='' key={index}>
+                      * {file}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className='italic opacity-80'>Loading...</div>
               )}
               {!isEmbedding ? (
                 <button className='shadow px-2 py-1 text-neutral-700 bg-yellow-400 rounded ' onClick={handleClick}>
@@ -80,9 +86,9 @@ const MainPage = () => {
               />
               <button
                 className='shadow px-2 py-1 text-neutral-700 bg-yellow-400 rounded whitespace-nowrap'
-                onClick={() => setIsSearchEnabled(true)}
+                onClick={handleSearch}
               >
-                🔎 Search Your Embeddings
+                {!isFetching ? '🔎 Search Your Embeddings' : '🔎 Searching...'}
               </button>
             </div>
           </div>
