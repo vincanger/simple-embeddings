@@ -40,6 +40,10 @@ page MainPage {
   component: import Main from "@client/MainPage.jsx"
 }
 
+query getFilesToEmbed {
+  fn: import { getFilesToEmbed } from "@server/generateEmbeddings.js",
+}
+
 action generateEmbeddings {
   fn: import { generateEmbeddings } from "@server/generateEmbeddings.js",
   entities: [Text]

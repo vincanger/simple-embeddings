@@ -1,14 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { encode } from 'gpt-3-encoder';
-import prismaClient from '@wasp/dbClient.js'; // TODO: change https://wasp-lang.dev/docs/language/features#using-entities-directly to include .js extension on import
 import { openai, initPinecone } from './utils.js';
 import type { Vector } from '@pinecone-database/pinecone';
 import type { GenerateEmbeddings } from '@wasp/actions/types';
+import type { GetFilesToEmbed } from '@wasp/queries/types';
 
 /**
  * this is the max number of tokens we want to chunk the text into
- * before we create an embedding for it.
+ * before we create an embedding for it. 
  * see: https://www.npmjs.com/package/gpt-3-encoder
  */
 const CHUNK_SIZE = 200;
@@ -41,8 +41,8 @@ const chunkContent = (file: FileToEmbed) => {
 
   if (contentTokens > CHUNK_SIZE) {
     /**
-     * For clean text, we can split on the period (.) character
-     * but for other text, we may want to split on the newline (\n) character
+     * For cleaner text, we can split on the period (.) character
+     * but for less formatted text, we may want to split on the newline (\n) character
      */
     const split = content.split('\n');
     // const split = content.split('. ');
@@ -108,6 +108,7 @@ const contentChunked: ChunkedFiles = fileContents.map((file) => {
   return chunkContent(file);
 });
 
+// write the chunked text to a file at the root of the project
 fs.writeFileSync('../../../chunkedTextForEmbeddings.json', JSON.stringify(contentChunked, null, 2));
 
 export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_args, context) => {
@@ -156,6 +157,7 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
       const vector: Vector = {
         id: chunkTitle,
         values: embedding,
+        // metadata: {}
       };
 
       vectors.push(vector);
@@ -169,11 +171,19 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
     }
   }
 
+  if (vectors.length === 0) {
+    return 'No new embeddings generated.';
+  }
   await pineconeIndex.upsert({
     upsertRequest: {
       vectors,
+      // namespace: 'optional-namespace'
     },
   });
 
   return 'Text embeddings generated.';
+};
+
+export const getFilesToEmbed: GetFilesToEmbed<never, string[]> = async () => {
+  return files;
 };

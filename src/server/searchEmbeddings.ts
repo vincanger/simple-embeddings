@@ -4,9 +4,9 @@ import { initPinecone } from './utils.js';
 import type { Text } from '@wasp/entities';
 import type { SearchEmbeddings } from '@wasp/queries/types';
 
-type Args = { inputQuery: string };
+type Args = { inputQuery: string, resultNum: number };
 
-export const searchEmbeddings: SearchEmbeddings<Args, Text[]> = async ({ inputQuery }, context) => {
+export const searchEmbeddings: SearchEmbeddings<Args, Text[]> = async ({ inputQuery, resultNum = 3 }, context) => {
   const pinecone = await initPinecone();
 
   const res = await openai.createEmbedding({
@@ -22,7 +22,7 @@ export const searchEmbeddings: SearchEmbeddings<Args, Text[]> = async ({ inputQu
   const index = pinecone.Index('embeds-test');
   const queryRequest = {
     vector: embedding,
-    topK: 10,
+    topK: resultNum,
     includeValues: false,
     includeMetadata: false,
   };

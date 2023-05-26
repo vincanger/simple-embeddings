@@ -1,6 +1,64 @@
 [
   [
     {
+      "title": "css-frameworks.md-0",
+      "content": "--- title: CSS Frameworks ---  import useBaseUrl from '@docusaurus/useBaseUrl';  # CSS Frameworks  ## Tailwind  To enable support for Tailwind in your Wasp project, you simply need to add two config files (`tailwind.config.cjs` and `postcss.config.cjs`) to the root directory. When they are present, Wasp will add the necessary NPM dependencies and copy your config files into the generated project output. You can then start adding [Tailwind CSS directives](https://tailwindcss.com/docs/functions-and-directives#directives) to your CSS files and `className`s to your React components.  ### New project tree overview ```bash title=\"tree .\" {6,13-14} . ├── main.wasp ├── src │   ├── client │   │   ├── tsconfig.json",
+      "content_length": 714,
+      "content_tokens": 193
+    },
+    {
+      "title": "css-frameworks.md-1",
+      "content": "│   │   ├── Main.css │   │   ├── MainPage.js │   │   └── waspLogo.png │   ├── server │   │   └── tsconfig.json │   └── shared │       └── tsconfig.json ├── postcss.config.cjs └── tailwind.config.cjs ```  ### Tailwind integration steps  :::caution You need to name the config files with the `.cjs` extension since they are CommonJS modules. If you name them with `.js` extension, Wasp will not be able to find them and Tailwind integration will not work. :::  #### 1) Add `./tailwind.config.cjs` ```js title=\"./tailwind.config.cjs\" /** @type {import('tailwindcss').Config} */ module.exports = {",
+      "content_length": 593,
+      "content_tokens": 198
+    },
+    {
+      "title": "css-frameworks.md-2",
+      "content": "content: [     \"./src/**/*.{js,jsx,ts,tsx}\",   ],   theme: {     extend: {},   },   plugins: [], } ```  #### 2) Add `./postcss.config.cjs` ```js title=\"./postcss.config.cjs\" module.exports = {   plugins: {     tailwindcss: {},     autoprefixer: {},   }, } ```  #### 3) Update `./src/client/Main.css` ```css title=\"./src/client//Main.css\" {1-3} @tailwind base; @tailwind components; @tailwind utilities;  /* rest of content below */ ```  #### 4) Start using Tailwind 🥳",
+      "content_length": 468,
+      "content_tokens": 194
+    },
+    {
+      "title": "css-frameworks.md-3",
+      "content": "```html title=\"./src/client/MainPage.js\" <h1 className=\"text-3xl font-bold underline\">   Hello world! </h1> ```  ### Adding Tailwind plugins To add Tailwind plugins, add them to your `tailwind.config.cjs` file and `main.wasp` files:  ```js title=\"./tailwind.config.cjs\" {10-11} /** @type {import('tailwindcss').Config} */ module.exports = {   content: [     \"./src/**/*.{js,jsx,ts,tsx}\",   ],   theme: {     extend: {},   },   plugins: [     require('@tailwindcss/forms'),     require('@tailwindcss/typography'),   ], } ```  ```js title=\"main.wasp\" {4-5} app todoApp {   title: \"Example App\",   dependencies: [     (\"@tailwindcss/forms\", \"^0.5.3\"),     (\"@tailwindcss/typography\", \"^0.5.7\")   ],   // ... } ```",
+      "content_length": 709,
+      "content_tokens": 288
+    }
+  ],
+  [
+    {
+      "title": "github.md-0",
+      "content": "--- title: GitHub ---  import useBaseUrl from '@docusaurus/useBaseUrl';  # GitHub  To implement GitHub Auth, you'll need to add the Auth object with the following configuration to your `main.wasp` file: ```c title=\"main.wasp\" app Example {   wasp: {     version: \"^0.8.0\"   },    title: \"Example\",    auth: {     userEntity: User,     externalAuthEntity: SocialLogin,     methods: {       gitHub: {}     },     onAuthFailedRedirectTo: \"/login\"   }, }  //...  entity User {=psl",
+      "content_length": 476,
+      "content_tokens": 173
+    },
+    {
+      "title": "github.md-1",
+      "content": "id          Int     @id @default(autoincrement())     username    String  @unique     password    String     externalAuthAssociations  SocialLogin[] psl=}  entity SocialLogin {=psl   id          Int       @id @default(autoincrement())   provider    String   providerId  String   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)   userId      Int   createdAt   DateTime  @default(now())   @@unique([provider, providerId, userId]) psl=} ```",
+      "content_length": 476,
+      "content_tokens": 190
+    },
+    {
+      "title": "github.md-2",
+      "content": "For more info on the specific fields, check out this [Auth](../language/features#social-login-providers-oauth-20) section of the docs.   You'll also need to add these environment variables to your `.env.server` file at the root of your project:  ```bash title=\".env.server\" GITHUB_CLIENT_ID=your-github-client-id GITHUB_CLIENT_SECRET=your-github-client-secret ``` We will cover how to get these values in the next section.   ## GitHub Auth  To use GitHub as an authentication method (covered [here](/docs/language/features#social-login-providers-oauth-20)), you'll first need to create a GitHub OAuth App and provide Wasp with your client key and secret. Here is how to do so:",
+      "content_length": 676,
+      "content_tokens": 188
+    },
+    {
+      "title": "github.md-3",
+      "content": "1. Log into your GitHub account and navigate to: https://github.com/settings/developers 2. Select \"New OAuth App\" 3. Supply required information    <img alt=\"GitHub Applications Screenshot\"       src={useBaseUrl('img/integrations-github-1.png')}       width=\"400px\"   />    - For \"Authorization callback URL\", if you just want to test your local app, put in: `http://localhost:3000/auth/login/github`   - Once you know on which URL your API server will be deployed, you can create a new app with that URL instead.       - For example: `https://someotherhost.com/auth/login/github` 4. Hit \"Register application\"",
+      "content_length": 610,
+      "content_tokens": 183
+    },
+    {
+      "title": "github.md-4",
+      "content": "5. Copy your Client ID and Client secret, and paste them into your environment variables named `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`in your `.env.server` file. 6. Now when youre user logs in with GitHub, you can access the logged in user on the client via the `useAuth()` hook, and on the server via the `context.user` object as described [here](/docs/language/features#accessing-the-currently-logged-in-user)!",
+      "content_length": 418,
+      "content_tokens": 119
+    }
+  ],
+  [
+    {
       "title": "my-stack-is-changing.txt-0",
       "content": "things are changing this crazy webbed of  Worlds can't stop improving for long  enough to even nail down a stack if  you're not already familiar I made the  T3 stack at the end of 2021 as an effort  to try and categorize the way that I was  building felt like it had been a while  since the mean stack the moon stack the  lamp stack and all the things I grew up  on as silly as these names and  abbreviations may have been they  represented more than just the tech that  the names were for me they represented  moments in time like a specific event  and Trend that was happening the mean  stack was the start of a full stack  JavaScript world to me meme is just as  important as node in what it enabled for  the future yes we don't use the  Express angular node stack directly  anymore but those pieces have inspired  so much since when I was in college I  remember the mean stack happening and",
       "content_length": 894,
