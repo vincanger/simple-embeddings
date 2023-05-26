@@ -8,7 +8,8 @@ import type { GetFilesToEmbed } from '@wasp/queries/types';
 
 /**
  * this is the max number of tokens we want to chunk the text into
- * before we create an embedding for it. 
+ * before we create an embedding for it. You can play around with this 
+ * number to suit your data.
  * see: https://www.npmjs.com/package/gpt-3-encoder
  */
 const CHUNK_SIZE = 200;
@@ -174,6 +175,7 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
   if (vectors.length === 0) {
     return 'No new embeddings generated.';
   }
+
   await pineconeIndex.upsert({
     upsertRequest: {
       vectors,
