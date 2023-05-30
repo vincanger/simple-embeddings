@@ -2,36 +2,31 @@ import fs from 'fs';
 import path from 'path';
 import { encode } from 'gpt-3-encoder';
 import { openai, initPinecone } from './utils.js';
+import mammoth from 'mammoth';
+import pdfParse from './pdf.mjs';
 import type { Vector } from '@pinecone-database/pinecone';
 import type { GenerateEmbeddings } from '@wasp/actions/types';
 import type { GetFilesToEmbed } from '@wasp/queries/types';
 
 /**
  * this is the max number of tokens we want to chunk the text into
- * before we create an embedding for it. You can play around with this 
- * number to suit your data.
+ * before we create an embedding for it. You can play around with this
+ * number to suit your data. suggested size: 80 - 500
  * see: https://www.npmjs.com/package/gpt-3-encoder
  */
-const CHUNK_SIZE = 200;
+const CHUNK_SIZE = 300;
 
 const dirPath = './src/shared/docs';
 const files = fs.readdirSync(dirPath);
 
 type FileToEmbed = { title: string; content: string };
 
-const fileContents: FileToEmbed[] = [];
-
-files.forEach((file) => {
-  const filePath = path.join(dirPath, file);
-
-  const fileStats = fs.statSync(filePath);
-
-  if (fileStats.isFile()) {
-    // NOTE: if you want to read pdfs, first install a library such as pdf-parse
-    const readFile = fs.readFileSync(filePath, 'utf8'); // this works for text files
-    fileContents.push({ title: file, content: readFile });
-  }
-});
+type ChunkedFiles = {
+  title: string;
+  content: string;
+  content_length: any;
+  content_tokens: number;
+}[][];
 
 const chunkContent = (file: FileToEmbed) => {
   const { title, content } = file;
@@ -45,8 +40,8 @@ const chunkContent = (file: FileToEmbed) => {
      * For cleaner text, we can split on the period (.) character
      * but for less formatted text, we may want to split on the newline (\n) character
      */
-    const split = content.split('\n');
-    // const split = content.split('. ');
+    // const split = content.split('\n');
+    const split = content.split('. ');
     let chunkText = '';
 
     for (let i = 0; i < split.length; i++) {
@@ -59,7 +54,11 @@ const chunkContent = (file: FileToEmbed) => {
         chunkText = '';
       }
 
-      chunkText += sentence + ' ';
+      if (sentence[sentence.length - 1].match(/[a-z0-9]/i)) {
+        chunkText += sentence + '. ';
+      } else {
+        chunkText += sentence + ' ';
+      }
     }
 
     contentChunks.push(chunkText.trim());
@@ -98,21 +97,54 @@ const chunkContent = (file: FileToEmbed) => {
   return chunks;
 };
 
-type ChunkedFiles = {
-  title: string;
-  content: string;
-  content_length: any;
-  content_tokens: number;
-}[][];
+const chunkFiles = async () => {
+  const fileContents: FileToEmbed[] = [];
 
-const contentChunked: ChunkedFiles = fileContents.map((file) => {
-  return chunkContent(file);
-});
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const filePath = path.join(dirPath, file);
 
-// write the chunked text to a file at the root of the project
-fs.writeFileSync('../../../chunkedTextForEmbeddings.json', JSON.stringify(contentChunked, null, 2));
+    const fileStats = fs.statSync(filePath);
+
+    if (fileStats.isFile()) {
+      let text: string = '';
+
+      if (file.endsWith('.docx')) {
+        const result = await mammoth.extractRawText({ path: filePath });
+
+        console.log('DOCX parsing: ', result.messages.length ? result.messages : 'No errors');
+
+        text = result.value;
+      } else if (file.endsWith('.pdf')) {
+        let dataBuffer = fs.readFileSync(filePath);
+
+        const data = await pdfParse(dataBuffer);
+        text = data.text;
+      } else if (file.endsWith('.DS_Store')) {
+        continue;
+      } else {
+        text = fs.readFileSync(filePath, 'utf8');
+      }
+      const content = text.replace(/(\r\n|\n|\r)/gm, ' ');
+      fileContents.push({ title: file, content });
+    }
+  }
+
+  const contentChunked: ChunkedFiles = fileContents.map((file) => {
+    return chunkContent(file);
+  });
+
+  // write the chunked text to a file at the root of the project for debugging
+  fs.writeFileSync('../../../chunkedTextForEmbeddings.json', JSON.stringify(contentChunked, null, 2));
+
+  return contentChunked;
+};
+
+chunkFiles();
 
 export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_args, context) => {
+  const contentChunked = await chunkFiles();
+
   const vectors: Vector[] = [];
   const pinecone = await initPinecone();
 
@@ -187,5 +219,5 @@ export const generateEmbeddings: GenerateEmbeddings<never, string> = async (_arg
 };
 
 export const getFilesToEmbed: GetFilesToEmbed<never, string[]> = async () => {
-  return files;
+  return files.filter((file) => !file.endsWith('.DS_Store'));
 };

@@ -1,476 +1,180 @@
 [
   [
     {
-      "title": "css-frameworks.md-0",
-      "content": "--- title: CSS Frameworks ---  import useBaseUrl from '@docusaurus/useBaseUrl';  # CSS Frameworks  ## Tailwind  To enable support for Tailwind in your Wasp project, you simply need to add two config files (`tailwind.config.cjs` and `postcss.config.cjs`) to the root directory. When they are present, Wasp will add the necessary NPM dependencies and copy your config files into the generated project output. You can then start adding [Tailwind CSS directives](https://tailwindcss.com/docs/functions-and-directives#directives) to your CSS files and `className`s to your React components.  ### New project tree overview ```bash title=\"tree .\" {6,13-14} . ├── main.wasp ├── src │   ├── client │   │   ├── tsconfig.json",
-      "content_length": 714,
-      "content_tokens": 193
+      "title": "Positioning_for_technical_products.pdf-0",
+      "content": "Positioning – what the hell is it? And why is everyone talking about it? The goal of this template is to help you figure out how to effectively position your product for developers or data teams, and as a consequence be able to write better website copy, pitch candidates better, give more effective demos, improve your documentation, etc. etc. # What positioning is and why it’s important The best definition of positioning I’ve found is this: “Positioning defines how your product is a leader at delivering something that a well-defined set of customers cares a lot about.” –April Dunford, positioning...expert or something This is not just a marketing exercise, because as a founder your job is literally to talk about the product all the time. Think: giving demos, sales calls, pitching candidates, creating your website, writing blog posts – pretty much anything external facing is going to require you to articulate your product’s value and place in the market. How confident are you that you’re doing it well? Couched in the above meaning-packed sentence is a lot of stuff you have probably been thinking about: ●Who is the audience for my product? ●What features do they care about? ●How do I differentiate from alternatives? ●.. Setting aside time to run through these questions, debate with your team, get feedback from experts, and the like will make everything you do in the early stagesa lot easier.",
+      "content_length": 1412,
+      "content_tokens": 297
     },
     {
-      "title": "css-frameworks.md-1",
-      "content": "│   │   ├── Main.css │   │   ├── MainPage.js │   │   └── waspLogo.png │   ├── server │   │   └── tsconfig.json │   └── shared │       └── tsconfig.json ├── postcss.config.cjs └── tailwind.config.cjs ```  ### Tailwind integration steps  :::caution You need to name the config files with the `.cjs` extension since they are CommonJS modules. If you name them with `.js` extension, Wasp will not be able to find them and Tailwind integration will not work. :::  #### 1) Add `./tailwind.config.cjs` ```js title=\"./tailwind.config.cjs\" /** @type {import('tailwindcss').Config} */ module.exports = {",
-      "content_length": 593,
-      "content_tokens": 198
+      "title": "Positioning_for_technical_products.pdf-1",
+      "content": "So how exactly do you go about doing that? Positioning is usually a game ofchoice– you’ll havea few different ways you can tell your story, but eventually you are going to need to commit to one 1  For an example, consider a 1 Early on, it’s cool to experiment with different positioning strategies. But eventually, you’ll want the whole company on the same page with who the audience is and what you provide to them.  product thatgives you visibility into how your Machine Learning models are performing. What’s the right way to position and message that product? ●ML monitoring for engineers ○For ML engineers who want confidence that your models are performing well in production, our product provides flexible, extensible, and easy-to-use infrastructure for model observability. ●Optimizely for ML ○For ML leaders who want to build great products powered by ML, our product provides tools to debug, improve, and personalize production model performance. ●Production data platform for ML engineers ○For busy ML teams tired of spending time wrangling data through fragmented tools, our product provides a data platform for your production models that lets you focus on building models, not managing your data. These all sound pretty good. And they all define slightly different audiences, angles, contexts, and value propositions. So let’s dive into how to define positioning, and ultimately decide on a way of doing it that works.",
+      "content_length": 1432,
+      "content_tokens": 298
     },
     {
-      "title": "css-frameworks.md-2",
-      "content": "content: [     \"./src/**/*.{js,jsx,ts,tsx}\",   ],   theme: {     extend: {},   },   plugins: [], } ```  #### 2) Add `./postcss.config.cjs` ```js title=\"./postcss.config.cjs\" module.exports = {   plugins: {     tailwindcss: {},     autoprefixer: {},   }, } ```  #### 3) Update `./src/client/Main.css` ```css title=\"./src/client//Main.css\" {1-3} @tailwind base; @tailwind components; @tailwind utilities;  /* rest of content below */ ```  #### 4) Start using Tailwind 🥳",
-      "content_length": 468,
-      "content_tokens": 194
+      "title": "Positioning_for_technical_products.pdf-2",
+      "content": "### When do I need to start thinking about positioning? Pretty much from day 1. How you position and set context will determine which users think you’re relevant to them, so even if you don’t have any yet, you can’t ignore this question. In fact, running through the positioning template below can be a useful exercise for clarifying how you’re thinking about your idea, even in the idea stage. Positioning is also an evolving thing. How you position yourself on day 1 will probably be different than year 2, as you gather more feedback from the market on what’s working and what isn’t. ### What is the output of positioning? The output of positioning work is not just a positioning statement or a headline on your website: rather it is a more holistic understanding of your context in the market, and how to talk about what you’re doing in a compelling way to your audience. This “understanding” can take form in a document going in depth on your positioning, a set of taglines and answers to questions, or even a recurring presentation to the company explaining how to pitch the company. It is a lot deeper than a good website headline.  In the realm of the sales deck,Andy Raskin’s postabout positioning in the context ofchangeis useful and worth reading.",
+      "content_length": 1258,
+      "content_tokens": 279
     },
     {
-      "title": "css-frameworks.md-3",
-      "content": "```html title=\"./src/client/MainPage.js\" <h1 className=\"text-3xl font-bold underline\">   Hello world! </h1> ```  ### Adding Tailwind plugins To add Tailwind plugins, add them to your `tailwind.config.cjs` file and `main.wasp` files:  ```js title=\"./tailwind.config.cjs\" {10-11} /** @type {import('tailwindcss').Config} */ module.exports = {   content: [     \"./src/**/*.{js,jsx,ts,tsx}\",   ],   theme: {     extend: {},   },   plugins: [     require('@tailwindcss/forms'),     require('@tailwindcss/typography'),   ], } ```  ```js title=\"main.wasp\" {4-5} app todoApp {   title: \"Example App\",   dependencies: [     (\"@tailwindcss/forms\", \"^0.5.3\"),     (\"@tailwindcss/typography\", \"^0.5.7\")   ],   // ... } ```",
-      "content_length": 709,
-      "content_tokens": 288
+      "title": "Positioning_for_technical_products.pdf-3",
+      "content": "# Defining positioning for technical tools Here is a (hopefully) useful framework for figuring out your positioning, based onApril Dunford’s popular one, with a technical bent. It focuseson figuring out yourproduct context through getting deep on alternatives, what features are important, what value they enable, and who that value is important to. Each of these feeds into one another, so it’s important to do them in order. We’ll useHexas a walkthrough example. ### Alternatives  You probably built your product because you were fed up with whatever life looked like without it. But what exactly did that life look like? Recall the trauma!! If you didn’t exist, what would customers use? ●Building things from scratch, plain JavaScript, etc. ●Popular open source frameworks ●Big, clunky ancient products ●Underpowered startup products E.g. before Hex, data teams built and shared work through an awkward lacework of products. You have Jupyter notebooks for running Python, but they didn’t quite play nice with SQL; sharing your work required setting up a server or sharing a literal notebook file. Frameworks like Shiny (if you’re using R) would help set up basic frontends, but data teams don’t know Flask or how to build UIs.",
+      "content_length": 1230,
+      "content_tokens": 276
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-4",
+      "content": "With the advent of products like Mode, there are now more places for data teams to work together; but these tools don’t focus on sharing knowledge, which is what effective data teams are all about. It isreallyworth it toget into specificshere.With technical audiences, having a firm grasp on your alternatives can really make them feel like you understand them. And even ifyouhave that grasp, does everyone at your company have it? Do your salespeople have it? Can they articulate why it’s easier to build internal tools in Retool than it is in React? Can they mention Redux in passing so that the person on the other side of the Zoom feels understood? Finally, a lot of founders start thinking about positioning because a newstartupcompetitoris making them feel insecure about their unique value proposition. This could be a startup that launched after you did or around the same time. A startup competitor is distinct from an open source alternative, a home grown solution, or a big incumbent competitor. Your startup competitors are part of the universe of alternatives! So you need to position yourself in a way that’s differentiated from competitors. Unfortunately, you won’t always know what your competitors’ products are like or how they position themselves, and it will be constantly changing.  So unless you are getting explicit questions about it from customers, in the early stages I would put this on the backburner 2 .Positioning vs.",
+      "content_length": 1447,
+      "content_tokens": 295
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-5",
+      "content": "competitive alternatives is always critical; positioning vs. startup competitors is not always critical. ### Featured features 2 This is obviously an oversimplification. Another post for another time.  What are the specific things that you can do in your product that make it much better than those alternatives you just laid out? Without HexWith Hex Connecting your data warehouse via an ORM1-2 clicks connects to any major data warehouse Awkward SQL in notebook cellsAutocomplete, one click formatting, and an inline schema browser Python in a notebook, SQL in an IDEWrite Python and SQL in the same environment, and even pass data between them Saving different notebooks for version control Git synced version control and release history in a slick UI ..... For this section, don’t worry about the value (this makes me faster, etc.), just focus on the specific features and design decisions that make using your product better than the alternatives. Which features you choose to...feature have an important impact on the context you’re setting for your audience. Returning to our example ML monitoring solution above, which features we focus on tell and entirely different story: ●Fine grained alerts and thresholds → communicates that this is a monitoring / observability solution ●Powerful charts and funnels → communicates that this is an analytics solution / data platform Your product probably has a lot of cool things you can do with it, but you need to pick the important ones that best position you against alternatives.",
+      "content_length": 1531,
+      "content_tokens": 295
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-6",
+      "content": "There will always be opportunities to market the other ones down the road. ### What have you done for me lately? Value  If you had to describe your product’s value proposition in 1-2 key pillars, what would they be? A value proposition explains how using your product will improve your users’ lives in a particular way. In technical tools, there’s a pretty limited world of value props: ●Speed– this saves me time ●Simplicity– this makes my life easier. This removesmental clutter ●Power / flexibility– this gives me a power up, thislets me do things I otherwise couldn’t do ●Impact– this helps me accomplish something I’m strugglingto accomplish, this makes me more impactful at my job You can get more specific too, but they’ll always roll up into making your user faster, better, stronger: ● Integrations– this works with my existing tools ●Security– this covers all bases and will improveour perimeter For each one of these pillars, you need to think about which specific features and design decisions make your product actually fulfill this promise. For developers and data teams, just telling themthat your product will save them timeisn’t enough; you need to explain and show them how. So take your outputs from the last section and map them to the value you’re bringing.",
+      "content_length": 1278,
+      "content_tokens": 282
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-7",
+      "content": "Over the past few years, a common value proposition in technical tools has become “stop spending time doing _____ so you can focus on what matters” where “what matters” is something like core feature work. This value proposition is really at its core somewhere between saving time and simplicity, i.e. don’t waste your time on something you could just automate. E.g. Hex makes it incrediblyfastandsimpleto createpowerful analysis right in your browser. You can connect your data warehouse (we support some wacky ones) in just a few clicks and get straight to writing SQL. Our SQL editor has thoughtful features to make your queries easier to write: autocomplete, one click formatting, and an inline schema browser so you know the column is firstName and not first_name. ### Like + subscribe: your audience The final and perhaps most important part of technical positioning isthe audience. If you ask most technical founders who their audience is, they’ll say something like:  “We sell to developers” Sorry, but that is not an audience. It needs to be more specific! Every company in infrastructure is selling things to “developers.” Here are two ways to be more specific: 1.Demographic specificity Getting more specific demographically could mean cutting your audience by a combination of: ●Role– full stack, frontend, SRE, DBA, etc.",
+      "content_length": 1333,
+      "content_tokens": 293
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-8",
+      "content": "●Company size– startups, enterprises, etc. ●Industry– healthcare, fintech, etc. ●Focus– ambitious, security conscious, cautious You will likely need to choose multiple of these for the audience to be specific enough. And even then, it’s hard to know this information in advance of going out to market and figuring out who cares about your product. That’s why I like early audience definition byproblem-context instead. 2.Problem-context specificity With problem-context specificity, you define your audience by a specific problem they’re experiencing at the current moment. E.g. Hex is built for data analysts and scientists who are struggling to build and share impactful analysis. Or: E.g. Retool is built for developers tasked with building an internal tool for a customer support, marketing, or operations team. I find this framing useful because itreallysetscontext with your audience, and it helps dictate the kinds of content you’d want to create down the road. It turns out that it can be easier to target “developers facing a specific problem” than “developers of a specific kind” sometimes. Combining the two can work well too.  E.g. Hex is built for data teams at small to mid sized companies with cloud based data warehouses and dbt projects who are struggling to build and share impactful analysis.",
+      "content_length": 1311,
+      "content_tokens": 287
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-9",
+      "content": "### How do I get these answers? Viewing positioning as a set of experiments Ah yes, the hard part. For some of these positioning questions, you’ll have a good idea of the answer, usually taken from some combination of: ●Your experience as a former target users of this product ●Talking to potential customers and seeing what sticks ●If you have existing customers / partners, their use cases For others though, you won’t be quite sure: which is why early on, you shouldview positioning as a set of experiments. It’s impossible to know forsure what messaging and positioning will resonate most with potential customers, hires, etc. – so you can use every opportunity to crisp up that messaging and see where it falls flat. If you have a few ideas of what positioning might work, but you aren’t sure, try experimenting with using different ones when pitching a new candidate to join or giving a demo to a potential new customer. You probablyalready do this, to a degree.But being intentional about it, and maybe even tracking things methodically, can go a long way. Your customers will also tell you how to position if you listen. “The thing a lot of founders miss is listening vs. talking. Your users know what their pain points are, and they will tell you all about them if you come at it the right way.",
+      "content_length": 1303,
+      "content_tokens": 281
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-10",
+      "content": "Many founders (me included), however, will try to go in their cave and craft the perfect positioning statement in a vacuum. For our messaging stuff now, we insist on always bringing real customer and user quotes into it. If we haven't heard it from a user, we can't use it in our marketing.” – Barry McCardel, Hex CEO You don’t always want to take what your users say at perfect face value, though. Often customers will ask for a specific solution to their problem which might not actually be the best way to solve it (better horses vs. cars, etc.) With a focus on problem definition, sometimes you need to see past what they’re saying to hear the “real” pain. Each customer is going to give you new information, make sure to look at this feedback in aggregate and not make huge shifts based on what one prospect tells you.  ## Positioning template Your AnswerHexample Competitive Alternatives If you didn’t exist, what would customers use? Without Hex, doing analysis requires an awkward combination of Python in home grown notebooks and SQL in IDEs. Sharing your work ends up as static screenshots of Excel charts in a presentation. Key Unique Attributes What features / capabilities do you have that alternatives don’t? Hex lets you write SQL and Python in a beautiful cloud-based notebook interface.",
+      "content_length": 1303,
+      "content_tokens": 279
+    },
+    {
+      "title": "Positioning_for_technical_products.pdf-11",
+      "content": "You can connect your data in only a few clicks, and easily build interactive data apps on top of your work with a drag and drop app builder. Value What do the attributes enable for customers? Hex brings your analysis and your sharing into the same platform. You’ll have a significantly easier time analyzing data, and actually sharing it with your organization so you can have an impact. It turns your work from academic to actual. Customers That Care Who cares a lot about that value? Data teams at small to mid sized startups, using a cloud data warehouse, working primarily in SQL and Python, focused on making their work impactful throughout the organization.",
+      "content_length": 663,
+      "content_tokens": 130
     }
   ],
   [
     {
-      "title": "github.md-0",
-      "content": "--- title: GitHub ---  import useBaseUrl from '@docusaurus/useBaseUrl';  # GitHub  To implement GitHub Auth, you'll need to add the Auth object with the following configuration to your `main.wasp` file: ```c title=\"main.wasp\" app Example {   wasp: {     version: \"^0.8.0\"   },    title: \"Example\",    auth: {     userEntity: User,     externalAuthEntity: SocialLogin,     methods: {       gitHub: {}     },     onAuthFailedRedirectTo: \"/login\"   }, }  //...  entity User {=psl",
-      "content_length": 476,
-      "content_tokens": 173
-    },
-    {
-      "title": "github.md-1",
-      "content": "id          Int     @id @default(autoincrement())     username    String  @unique     password    String     externalAuthAssociations  SocialLogin[] psl=}  entity SocialLogin {=psl   id          Int       @id @default(autoincrement())   provider    String   providerId  String   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)   userId      Int   createdAt   DateTime  @default(now())   @@unique([provider, providerId, userId]) psl=} ```",
-      "content_length": 476,
-      "content_tokens": 190
-    },
-    {
-      "title": "github.md-2",
-      "content": "For more info on the specific fields, check out this [Auth](../language/features#social-login-providers-oauth-20) section of the docs.   You'll also need to add these environment variables to your `.env.server` file at the root of your project:  ```bash title=\".env.server\" GITHUB_CLIENT_ID=your-github-client-id GITHUB_CLIENT_SECRET=your-github-client-secret ``` We will cover how to get these values in the next section.   ## GitHub Auth  To use GitHub as an authentication method (covered [here](/docs/language/features#social-login-providers-oauth-20)), you'll first need to create a GitHub OAuth App and provide Wasp with your client key and secret. Here is how to do so:",
-      "content_length": 676,
-      "content_tokens": 188
-    },
-    {
-      "title": "github.md-3",
-      "content": "1. Log into your GitHub account and navigate to: https://github.com/settings/developers 2. Select \"New OAuth App\" 3. Supply required information    <img alt=\"GitHub Applications Screenshot\"       src={useBaseUrl('img/integrations-github-1.png')}       width=\"400px\"   />    - For \"Authorization callback URL\", if you just want to test your local app, put in: `http://localhost:3000/auth/login/github`   - Once you know on which URL your API server will be deployed, you can create a new app with that URL instead.       - For example: `https://someotherhost.com/auth/login/github` 4. Hit \"Register application\"",
-      "content_length": 610,
-      "content_tokens": 183
-    },
-    {
-      "title": "github.md-4",
-      "content": "5. Copy your Client ID and Client secret, and paste them into your environment variables named `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`in your `.env.server` file. 6. Now when youre user logs in with GitHub, you can access the logged in user on the client via the `useAuth()` hook, and on the server via the `context.user` object as described [here](/docs/language/features#accessing-the-currently-logged-in-user)!",
-      "content_length": 418,
-      "content_tokens": 119
-    }
-  ],
-  [
-    {
-      "title": "my-stack-is-changing.txt-0",
-      "content": "things are changing this crazy webbed of  Worlds can't stop improving for long  enough to even nail down a stack if  you're not already familiar I made the  T3 stack at the end of 2021 as an effort  to try and categorize the way that I was  building felt like it had been a while  since the mean stack the moon stack the  lamp stack and all the things I grew up  on as silly as these names and  abbreviations may have been they  represented more than just the tech that  the names were for me they represented  moments in time like a specific event  and Trend that was happening the mean  stack was the start of a full stack  JavaScript world to me meme is just as  important as node in what it enabled for  the future yes we don't use the  Express angular node stack directly  anymore but those pieces have inspired  so much since when I was in college I  remember the mean stack happening and",
-      "content_length": 894,
-      "content_tokens": 198
-    },
-    {
-      "title": "my-stack-is-changing.txt-1",
-      "content": "feeling like there was this exciting  movement I could be part of and I tried  and I hated angular I hated Express I  did not like JavaScript much so I gave  up and I went back to my comfort zone in  Python land eventually moving over to  Ruby and then eventually moving over to  Elixir but I noticed this movement and  it was something I wanted to to be part  of because these big Monumental  Technologies and stacks as I was hearing  them called were not common in other  places sadly after mean moved to mern  kind of feels like well to be frank  trendy Stacks died and I missed it I  feel like I missed out because I joined  web dev well after myrn had burned out  graphql was the hot thing and we saw  everybody adopting graphql typescript  and then whatever backend language  usually going but I wanted to see a  stack happen at the same time I had",
-      "content_length": 854,
-      "content_tokens": 191
-    },
-    {
-      "title": "my-stack-is-changing.txt-2",
-      "content": "recently left twitch and was starting to  build my own things I quickly realized  as much as I missed back end and as much  as I was loving front end that I didn't  need to lean on my old back-end skills  to get what I needed out of these new  technologies and when I started adopting  serverless and Edge compute more taking  advantage of what versel next JS and  cool new libraries like drpc provided it  got much easier to build full stack  applications without thinking about all  the parts of the stack it felt like a  new generation of text and I wanted to  coin it I knew others who were starting  to use some of the pieces but I wanted a  name for when they were assembled  together and I chose my own name because  I'm a conceited which is how the  T3 stack was born the t is the T in Theo  and the three is the other three letters",
-      "content_length": 840,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-3",
-      "content": "it doesn't stand for table and  typescript trpc like everyone seems to  think it does it's just the name I came  up with because it's the tech that I  used I made a video called roundest  where I made an app that lets you pick  which Pokemon is most round because I  thought it'd be a fun way to figure out  what people's perception of round was so  I could use that for a product I was  working on called round as a code name  I had no idea what I was getting into  when I did that that video is still one  of the most viewed videos on my channel  it's incredibly out of date which is why  I filmed an updated one coming out soon  but it really coined this new stack  since then I've seen everybody from  YouTubers to influencers on Twitter and  such to job listings talking about the  T3 stack making tutorials for the T3",
-      "content_length": 823,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-4",
-      "content": "stack and using it as a representation  of a shift in full stack software Dev  the T3 stack was always kind of made up  because all Stacks are I didn't mean for  T3 stack to be you have to use all of  these parts it represented a movement  away from two separate monoliths a big  front end and a big back end into  something that's both more modular in  terms of How It's assembled but also  more cohesive in terms of how the parts  come together all in one full stack  typescript based solution I'm so proud  of what the T3 stack has enabled and how  far create T3 app has pushed developer  experience both inside and outside of  the next JS ecosystem it's such a cool  way to build but I do think it's  starting to get outdated already I don't  mean you shouldn't use it I certainly  don't mean these Technologies are going",
-      "content_length": 825,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-5",
-      "content": "to be thrown away or anything but due to  the modular nature of the T3 stack I  can't help but look at some pieces and  notice that there are now better options  that are more aligned with what we're  trying to do and build and to keep with  the original goal of the T3 stack being  the best way to build a modular full  stack typesafe application it only seems  natural to start looking at these better  options and decide when it's time to  make changes to the create T3 app  someone just mentioned in chat I'm  honestly surprised this phrase hasn't  been coined and used a bit more I'm  really proud of it bleed responsibly I  love bleeding edge stuff I love trying  new technologies and playing with new  things it's important to recognize the  difference between something new that is  safe and ready to be adopted versus  something that could bring your whole  business down while I might be really",
-      "content_length": 904,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-6",
-      "content": "interested in a new way to fetch data on  client I'm going to be much less  interested in a new way to store data on  a database because the data that my  application thrives on is essential to  my business's success I don't want to  risk what I'm building on the database  being changed but I'm very very down to  play with new ways to fetch data and  render it on client because that's not  going to put my application in anywhere  near as big of a risk and I can always  swap things out in the future so what  are the most fragile parts of the T3  stack right now and what are the things  we're looking to adopt in the future  let's dive in and again the T3 stock  doesn't mean you use all these pieces it  means that you're working with the  mindset of adopting the pieces that make  the most sense I would say the core",
-      "content_length": 823,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-7",
-      "content": "things that like if you're not using  them I would hesitate to call it T3  stack are typescript trpc and next JS if  you're not using these things it will be  a little harder for me to call it T3  stack but I get it beneath this there  are like another tier of things that are  pretty common like almost everything I  see uses them prismas the big one  Tailwind obviously and I guess authjs  fits in here it's uh being used less and  less and the the amount I've seen the  community love the Alternatives we're  playing with is huge which is so cool to  see but these are like the the core T3  stack pieces there's also the infra and  I I am personally much less hesitant to  say something is there isn't T3 stack  based on the infra but usually what we  see people deploying on is versel for",
-      "content_length": 792,
-      "content_tokens": 192
-    },
-    {
-      "title": "my-stack-is-changing.txt-8",
-      "content": "your Edge and Lambda functions Planet  scale or Super Bass your database I  particularly mean planet scale I think  the features super basis building don't  benefit the stack as much but the  features Planet scale is building make  our lives significantly easier so  actually I'm gonna not put Super Bass  here because I don't think it's as  relevant there for cell Planet scale  upstash I would say is pretty essential  at this point because upstash for all  the things that the next js on versel  doesn't do up stash covers so like  making a redis-based cache serverless  Kafka super powerful and obviously all  the cron stuff yes first cell now has  crons but you can't do them  programmatically you can only do them  via like hard-coded values so if you  want a cron to be created when a user  does something you still got to use  something like upstash and thankfully",
-      "content_length": 872,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-9",
-      "content": "they make it very very nice to do I  would say like this is the the core  stuff there's also other pieces in here  like uh axioms dope for vlogging and all  things analytics I at this point point  it's like we have to put clerk in I  should also specify all five of these  companies pay me now none of them paid  me before I used their stuff and all of  them have impressed me well before I  could move on to almost anything else  but honestly I would use these whether  or not they were paying me and I should  I could have made more money picking  Alternatives and didn't because these  are the things I want to deploy on so  let's go into these pieces and start  breaking things down what's going on and  what's changing so with typescripts not  much here I will say in typescript land  I'm running into some more problems DX",
-      "content_length": 828,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-10",
-      "content": "wise specifically the hell I've been  running into around how do I put this my  editor performance is getting bad my  typescript server dies all the time in  the tutorial I just did for create T3  app it died like three times in my three  and a half hour recording session it's  bad now it's not in the best state I am  hopeful we're going to start seeing  performance wins I know there's a big  typescript update coming soon that's  going to help a lot here but but yeah  typescripts vs code server has been  having some issues I'll admit trpc is  some amount guilty here because it does  so much inference and combined with Zod  and the depth of the inference it can  get uh it can get bad ts5 won't fix it  but the new module stuff that they've  done will make it a good bit better what  I would like to see is more intelligent",
-      "content_length": 830,
-      "content_tokens": 198
-    },
-    {
-      "title": "my-stack-is-changing.txt-11",
-      "content": "automatic creation of project references  or ideally for Turbo repo to make it  easier to project reference between  package boundaries so I'm more able to  lock off my trpc thing and say hey this  is the state of this still have command  click go to working but like segmenting  the heavier things I see a lot of people  saying TS reset uh it looks really cool  and something I want to play with I also  am thinking about tscs lens I've been  using tscs lint on projects more now and  I love a lot of the rules some of them  now that I have them feel like they  should have been there all along and  it's just stuff like making sure you  always void out a promise if you're not  awaiting it is we've found bugs we we  knew where there were weird behaviors  around because of the things that the  tscs sent recommended rules found in our",
-      "content_length": 837,
-      "content_tokens": 192
-    },
-    {
-      "title": "my-stack-is-changing.txt-12",
-      "content": "code base for us but now there's a whole  separate server that's even more fragile  that's crashing all the time in my  editor and sometimes I'll reset the  typescript server and still have an  error and realize the error isn't from  typescript it's from eslint and then  I'll reset eslint as well and then  finally it will actually show me what  I'm looking at it is slow it is rough  and God I I wish we could have the rules  that tses lint gives me the feedback of  without just wrecking my editor  performance and crashing the server all  the time we're likely going to rip it  out of our mono repo for webhook thing  because of how bad it's made the editor  experience especially for my CTO when  he's using his Intel MacBook because I  can't convince him to upgrade to an M1  so yeah that's my thinking here TS reset",
-      "content_length": 822,
-      "content_tokens": 199
-    },
-    {
-      "title": "my-stack-is-changing.txt-13",
-      "content": "seems cool my hesitation is it is so  different from how a lot of typescript  could just behave that I'm expecting  conflicts between its expectations and  the things that I'm installing and I'm  not sure how I feel about such a hard  Fork from the default behaviors of  typescript it's a really good idea and I  like that we're challenging what  typescript recommends it almost feels  similar to what we're doing with create  T3 app in terms of how it relates to  create next app in that we're proving  value in a handful of things and now  they are kind of brute forced to make  changes and improve create next app as a  result of create T3 app so I'm hopeful  TS reset at the very least is a forcing  function to help typescript continue to  improve we're not going to be moving off  of typescript anytime soon it is still",
-      "content_length": 825,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-14",
-      "content": "by far the best solution for all of this  but I am excited for a future where  typescripts experience specifically  around the editor performance and the  crashing Smooths out enough for the  strictest rule set that make typescript  the least likely to have problems can  also be aligned with the best developer  experience of typescript that's where  that's at trpc V10 is incredible if  you're not already familiar with trpc  V10 was a massive level up trbc V10 is  incredible I have been so impressed with  the experience I know I've shown it off  like a thousand times but being able to  command click from your client to your  server while still having proper client  server separation is magical and the  fact that this is portable and can work  with other things is so so cool I I am  really happy with trpc V10 however the  important thing uh react server",
-      "content_length": 863,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-15",
-      "content": "components shake things up we'll go more  into that in a bit but the role of trpc  in a react server component supported  code base is very different and we're  gonna have to think about that a lot  well I'm going to do a whole tangent  about react server components in a bit  so stay tuned for that what about next  best way to combine react and your back  end I still firmly believe this if you  want to do react to the react way and  have a back end regardless of how you  use next JS it's one of the best ways to  do that as an all-in-one solution the  power of the app directory inside of  pages is incredible and the new route  Paradigm in the app directory is  similarly powerful I think that next  still makes a lot of sense as the the  core of create T3 app but there is a lot  of but there's going to be a lot of",
-      "content_length": 822,
-      "content_tokens": 199
-    },
-    {
-      "title": "my-stack-is-changing.txt-16",
-      "content": "competition nowadays and uh yeah the  there's never been a better time to  consider other options things like bling  enabling all Frameworks to have some of  those benefits of not just having  back-end code deployed in your front end  but actually good co-location also like  remix continues to improve solid start  is dope and even if we stick with next  uh app router is a lot to chew on so  even from the core here we have a lot to  think about and talk about we're like  next.js is changing a lot everything  around it is changing a lot server  components change the role of trpc  entirely and typescript's been getting  more problematic for me on my machine  I'm not going to leave any of these  things behind anytime soon but there is  room to improve in all of them let's gun  through the rest super quick and then  I'll go on a long rant about server",
-      "content_length": 858,
-      "content_tokens": 196
-    },
-    {
-      "title": "my-stack-is-changing.txt-17",
-      "content": "components so Prisma the best fall stack  DX for type safe DB management I still  firmly believe this there's no better  way to have a file that represents what  your database should look like and how  you query it in your type definitions  it's been a really good experience to  work with as a developer however  deploying it sucks because the size of  the binary it chips is massive it has to  form a SQL Connection in order to  actually do querying and as this giant  graphql binding between the native query  layer and the like typescript layer that  actually we use and connect through it  takes a 400 millisecond cold start time  and can bump it as high as like three  seconds for basic queries it's rough and  it's also almost certainly never gonna  run well on the edge because it doesn't  have a connection method that makes  sense on the edge it has this giant rust  binding that you have to connect through",
-      "content_length": 917,
-      "content_tokens": 199
-    },
-    {
-      "title": "my-stack-is-changing.txt-18",
-      "content": "it's pretty rough on top of that it's  performance in mono repos is rough  getting it set up right there sucked for  us especially if you're also using pnbm  I think they've fixed some amount of the  bugs but nowhere near enough of them  we're not where we want to be here and  thankfully things are improving I saw  somebody mention there's now the Json  feature flag I haven't looked into it to  kill internal graphql bindings it seems  promising I think it lets you run on the  edge but I'm not sure about that it  still has to make a connection somehow  and I don't want to do it through the  Prisma Cloud proxy because it's put in  weird regions and isn't the best  performance that I've seen it's actually  pretty bad performance from what I've  seen and honestly the the spiciest thing  here is uh Planet scales database JS is  undefeated",
-      "content_length": 845,
-      "content_tokens": 196
-    },
-    {
-      "title": "my-stack-is-changing.txt-19",
-      "content": "database.js is very minimal in what it  is it is just a method to connect to and  fetch from planet scale via a SQL string  so you actually have to write SQL to use  database.js but it lets you fetch it  from anywhere because you're fetching it  through HTTP instead of through a direct  database connection which means you can  do this from The Edge they're also very  close to having HTTP 3 support which  means you can do batched queries and get  back batched responses with insanely  fast performance it's stupid fast I'm  really hyped on what database enables  however it doesn't have all the DX that  Prisma includes so how do we get our  type safety how do we get our good code  gen I already see the name coming up  y'all have been asking a bunch it's not  kiesley all I want to put this here  because keasley is really important and",
-      "content_length": 841,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-20",
-      "content": "pretty close Keys leads a typesafe query  Builder it doesn't know the types of  your database and doesn't have a way to  define a schema and update your database  but it does have a really cool Syntax  for querying against your database once  the type definitions are made it also  has different drivers they call them for  connecting different database types and  somebody from a community at Jacob SP  actually created a database.js driver  for kiesley which is super cool because  it means you can use kiesley on the edge  to write typesafe queries against your  database super powerful I've used it for  a bunch of stuff but there's something  cool that we've been seeing more and  more of and they just added the feature  that was keeping me from looking into it  drizzle orm drizzle is looking  incredibly promising drizzles and orm  that looks a lot closer to what Prisma",
-      "content_length": 878,
-      "content_tokens": 194
-    },
-    {
-      "title": "my-stack-is-changing.txt-21",
-      "content": "does but it's all in typescript if you  know SQL you know drizzle  the syntax feels a lot more like SQL  when you're actually writing it but the  way you define things like the PG table  and all this this all exists in  typescript so you have a typescript file  where you define your model  and then you can use their drizzle  migrations helper to actually generate  migrations based on the output of this  to synchronize your database and get  that in the right State and then you can  actually query like awaitdb.select ID  name City from users left join cities  equal user City ID cities.id so you have  to import a lot of these helpers which  might not be the best thing but it's so  much better than having to deal with all  of the baggage and code gen and  everything else the result type here  though is correct even with this crazy",
-      "content_length": 839,
-      "content_tokens": 194
-    },
-    {
-      "title": "my-stack-is-changing.txt-22",
-      "content": "join going on which is so dope to see I  have been very impressed with what this  enables and the quality of the type  definitions that you get in and out when  you work with it it also has a binding  for database.js and the new feature that  I was waiting for database push for  those who don't know I don't love  migrations I'll pin a video here and put  in the description for those who haven't  seen my video about why I don't like  database migrations generally speaking  migration especially if you do migrating  things like renames and removes and  moves tend to not be backwards  compatible  on top of that you need to be very  careful about when deploys happen and  the relationship between the deployed  changes and your actual runtime  environment is and just keep everything  in sync sucks ideally a migration should  only be able to add or remove and  ideally the history of when those ads",
-      "content_length": 902,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-23",
-      "content": "and removes happen should exist entirely  within my code base because I have the  diff on the file I don't need to save  the history of things changing in two  places when I already have it in my  commit history it was something like  Planet scale and their deploy request  system it's much easier to just destroy  the database and replace it with the  state that you're looking for and then  merge the schema changes to your  deployed environment as such I don't  like generating migrations and running  them it's a bad experience for the stuff  that we're doing because of that I use  DB push a lot in Prisma and was not  interested in using drizzle until I  could have a DB push feature and I was  really impressed with how quickly they  shipped drizzle kit push right now it's  only for MySQL which makes sense because  it's mostly being used by Planet scale  customers feature still in testing",
-      "content_length": 898,
-      "content_tokens": 194
-    },
-    {
-      "title": "my-stack-is-changing.txt-24",
-      "content": "process together with adding more or CLI  warnings suggestions drizzle kit push is  available to use now though really  pumped this is available  I know somebody in YouTube chat asked if  drizzle supports absolutely  not it's for SQL  it's a SQL database dialect it shouldn't  support other things it should support  SQL because it's for SQL I'm still a  little upset that Prisma supports all  the things it does because it doesn't  need to support most of them it is  enabling bad decisions when you support  things that shouldn't be supported so  I'm hyped on drizzle I plan on playing  with it much more I can see it as  possibly being the thing that kills  Prisma been waiting for a long time  fingers crossed we can finally start  using it cool Tailwind probably not  going anywhere  Talent is pretty dope if you didn't  already know Tailwind I was incredibly",
-      "content_length": 864,
-      "content_tokens": 189
-    },
-    {
-      "title": "my-stack-is-changing.txt-25",
-      "content": "skeptical of before I used it and became  a very strong Fanboy after I started  using it heavily it's been an incredible  experience I see people asking about  random like vaporware databases that do  that aren't real standards I don't care  like I'm not into like post sequel  Solutions SQL is fine I just want good  DX on top of SQL remember lead  responsibly I I'm not going to bleed  responsibly on a weird startup that's  data standards aren't compliant with the  rest of the world just it makes no sense  if I can't reliably like PG dump or  MySQL dump and throw it somewhere else I  don't trust you cool so tail end  probably not going anywhere I did want  to highlight one cool thing I brought it  up earlier Chad has been working on some  very cool stuff with his UI package the  cool thing about Chad's UI stuff is that  it's not your traditional npm install",
-      "content_length": 868,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-26",
-      "content": "it's a bunch of example components using  tailwind and Radix UI and I could see us  using some of these examples inside of  our code base case and actually  recommending them as default paths  inside of create T3 app  been very impressed with what's going on  here this is an example with this fancy  modal with all of the handle like with  all the accessibility stuff handled  correctly through Radix but you don't  install the package you go and copy  paste the code into your code base which  I love I don't want to install a package  that has a button that works a specific  way I want to have examples of ways  things can work and source code that I  can update and make changes to  it doesn't animate out  eh  I don't necessarily care if it animates  out or not  I think it's nice having a go away  immediately personally honestly but uh",
-      "content_length": 843,
-      "content_tokens": 191
-    },
-    {
-      "title": "my-stack-is-changing.txt-27",
-      "content": "yeah since this is just the code you can  make it animate out yourself you have  the source to do whatever you want to  he's not giving us a component he's  giving us source code so that we can  make whatever component we want to make  very very helpful I have been super  impressed yeah here's the code that you  actually have to copy paste into your  project to use it  why is this better than title wind UI or  headless UI so tail and UI is paid this  is free still love tail and UI and  recommend it heavily if you have the  money to spare and you want to support  the core Tailwind team but this is a  very good free alternative to Tailwind  UI I will also say that Radix UI is in a  much better State than headless UI in  terms of the like the Headless component  Library Radix was just first and has  been battle tested by many for half a",
-      "content_length": 845,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-28",
-      "content": "decade now and this is the the Radix  based alternative to Tailwind UI I love  this I've been at about Flow by like a  hundred times now and I have no idea  what it is so I just want to know what  it is so I can on it components on  top of Tailwind  oh no this is the same thing never mind  uh  my concern here is that this seems to  just give you HTML  but I need much more than HTML I need  JavaScript on a lot of these  well give react examples for any of  these nope it's just HTML or all of them  just HTML  because it's still like a good starting  point flow bite react bindings in the  works cool well well that's a thing  that'll be cool to see a little more  sketched out or sketched out about like  how they're going to make money and such  like pro version like I don't know who",
-      "content_length": 789,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-29",
-      "content": "these guys are I don't want to pay them  when I could pay the Tailwind team  directly and uh shad's package is open  source and I actually I don't know if  it's publicly announced where he's  working now so I can't say just yet  until somebody's confirmed that for me  but I know where he's making his money  and it's a much safer place and I'm  confident this will stay open source and  it just it makes a lot of sense so I  like Shad CNS UI stuff is dope I'm not  interested in Uno CSS and a lot of the  other like Tailwind syntax things none  of them solve problems that I have like  Tailwinds compiler is really good and  gives me good results both in Dev and in  production I have no reason to use  something else especially if I can't get  the cool superpowers like the auto sort  which is insanely powerful yeah",
-      "content_length": 818,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-30",
-      "content": "tailwind's in a really good spot I don't  see us changing this ever off JS here is  the the final of the core pieces so  what's going on with auth Js  previously next off still by far the  best self hosted option move itself  hosting kind of sucks and this is the  harsh reality here self-hosting auth  sucks it's awesome that it's as easy as  it is with off JS and if you want to  have a fully modular stack where you own  every piece optjs is still the best  solution for that I've personally  started getting tired of it because I  have things that off JS doesn't make  easy like I want preview environments to  work with oauth so I can sign in with  oauth and have like a good preview  experience when I sign in on a PR build  I also want mobile next stop and off JS  have no real Mobile support right now so",
-      "content_length": 812,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-31",
-      "content": "you'll be rolling your own effectively  from scratch and I haven't seen a good  implementation of that still clerk has  most of that handled and then some Clark  also has all of the providers pre-baked  with keys so you don't have to make a  new sign in key and a new callback URL  for every single service you want to  test in you can use their keys during  Dev and then switch them to your keys  when you're ready to ship in production  clerks then a much better experience for  me so I've been recommending Clerk  clerk isn't in create T3 app for a  couple reasons the first one is I really  want to keep the core of create T3 app  all open source self-hostable  Technologies to stay within the spirit  of the modular approach and also they  pay us and I'm careful about crossing  the line where the people who are  sponsoring the channel get positions",
-      "content_length": 855,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-32",
-      "content": "high up in our recommendations so being  careful about how we go about this but I  definitely see a future where clerk is  much easier to like run a command and  have be part of create T3 app or a  plug-in system that makes it easier to  adopt clerk when you already have crate  D3 app setup that said I have a video  coming out soon where I use create T3  app and Clerk and it was like four lines  of code to add it it wasn't a big deal  at all but I would love a future where  Clark's integration is as simple as  nextos integration in that you click a  button or enter a command and it is  added correctly to your code base so we  are investigating this further I think  that's it for these things mono repos  how do I want to put this turbo is a  massive win and it really is like turbo  Turbo repo and turbo pack both are going",
-      "content_length": 832,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-33",
-      "content": "to be essential in keeping the developer  experience of these tools good  especially as your application scale and  you have bigger teams bigger like chains  of dependencies you have applications  that have packets being consumed by like  15 things there's a lot of potential  wins coming from the turbo ecosystem  turbo is a massive win and X is dope too  the main benefit of Turbo's ecosystems  both turbo repo and turbo pack is the  granularity of the caching turbo doesn't  redo work you don't need to redo so if a  package wasn't touched and its  dependencies weren't touched it doesn't  need to recheck the types and recompile  the output it can use the cached one if  you're in a code base like a nexjs code  base that's using turbo pack it will  only have to recompile the files that  have been changed rather than all of the  files whenever A Change Is made these",
-      "content_length": 872,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-34",
-      "content": "powers are what make turbo pack and  turbo repo so useful as your code base's  scale because you'll never actually have  to work at the scale of the code base  unless something that everything depends  on has changed ideally that will almost  never happen and the result is your your  updates are only dependent on the things  that have been changed very excited for  where these things are going I would  love a future where we adopt turbo as  like a main recommended path in create  T3 app but my concern is that it's not  an abstraction everyone needs and it  does visually make things a little more  complex when you're first starting with  create T3 app and I don't want to fill  your code base with a bunch of things  that you might not understand when  you're trying to just do a better create  next app in it I could see a future  where we offer a monorepo option when",
-      "content_length": 876,
-      "content_tokens": 192
-    },
-    {
-      "title": "my-stack-is-changing.txt-35",
-      "content": "you're getting started with create T3  app but it's not necessarily the main  direction we want to recommend as the  default we also have create T3 turbo  already which is a fantastic repo that  was originally created by Julius there's  quite a few contributors to it now not  as much as create T3 app but the goal of  create T3 turbo is very specifically to  show you how you you can do a turbo repo  with create D3 app with a separate  mobile app and web app that share  backend code obviously this doesn't have  next auth or authjs in it because if it  did it wouldn't work on mobile but there  is actually a fork that is run by clerk  crazy3 turbo clerk is a fork that is  maintained by James who I saw is in chat  here I'll link this in chat for people  who don't already have it which is super  powerful because it's crate T3 turbo",
-      "content_length": 837,
-      "content_tokens": 196
-    },
-    {
-      "title": "my-stack-is-changing.txt-36",
-      "content": "with the addition of clerk for auth so  you set up an account on clerk you go  swap out the environment variables and  now you can deploy your mobile app and  your web app with the same back end and  same auth system I already have a video  about this as well as does jabes so  there's a bunch of context on how to use  the stack it's in a really cool place I  love it I'm not sure what the role of  this is yet in the whole create T3 app  ecosystem but it is a thing I'm thinking  a lot about so that's pretty much  everything out on the table in terms of  what we've been looking at and thinking  about we're not leaving next.js  anytime soon we're probably not going to  make most of these changes defaults  but the big thing that I've been dancing  around because it's scary to talk about  they are a c question",
-      "content_length": 815,
-      "content_tokens": 194
-    },
-    {
-      "title": "my-stack-is-changing.txt-37",
-      "content": "what do we do about server components  so this has been tough for me I was very  skeptical of server components and to  some degree I still am server components  for those who aren't familiar are a  method in react of running your  component on the server in a traditional  react application you have your react  bundle of JavaScript code that gets sent  down to the client usually with an empty  HTML page and the client downloads that  JavaScript runs it figures out what  needs to actually be on the page and  then generates that page on the client  for the user it might additionally fetch  data and do other things but generally  you get an empty HTML page and then  react on the client will render the page  this is called a single page app it's  been the the standard since react  started getting popular it's have  something like twitch still runs to this  day this isn't ideal though which is why  next was first made the original goal of",
-      "content_length": 947,
-      "content_tokens": 198
-    },
-    {
-      "title": "my-stack-is-changing.txt-38",
-      "content": "next.js was to make it so you can take  that HTML that react generates and  generate it initially on the server so  you always get back a complete HTML page  and then the client can catch up and  hydrate the page from there this came  with a bunch of problems though  specifically your react code runs in two  places it runs Once on This server with  all of the expected server constraints  and then after the fact it runs again on  the client but now it doesn't have  access to some of the things it might  have on the server so if you were  awaiting some data from your database or  you were like connecting to something  you can't connect to one client or the  opposite on client you're using AV  devices from the or users like computer  or browser and those don't exist on the  server your code having to run in both  places meant you had to be considerate  of both the server runtime and the",
-      "content_length": 896,
-      "content_tokens": 198
-    },
-    {
-      "title": "my-stack-is-changing.txt-39",
-      "content": "client runtime for all of your react  code and that isn't a great experience  it also meant we weren't getting a lot  of the benefits of the server because  you couldn't really run server code in  components because those components had  to run on the client as well so you  couldn't make a DP call on a component  you'd have to make an endpoint or a get  server-side props function that does the  back end part and then the client gets  that data through any of many different  methods react server components throw  all of that away we're starting from  scratch again we have to rethink our  model because components don't run on  client by default anymore  in modern nexjs using App router and  react server components you can await a  database call and return some jsx and  that code will never run on the client  this is clearly a huge mental shift for  a lot of people more so than I thought",
-      "content_length": 897,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-40",
-      "content": "the reason I say that is when I go to  the comment section of my most recent  video about server components yeah it's  gonna be around here SQL injection  enthusiasts love this creating  connection to the DB from the front end  is not safe for obvious reasons client  security you can't just let clients make  arbitrary SQL queries why are you gay as  you guys can see react server components  are really hard for a lot of people to  understand and I think it's really  simple and I'll be honest it confused me  more than probably should have for a  little bit too react server components  don't run in two places and that's what  we're used to with react components they  either only run on the client or they  run on the client and run once on the  server with react server components they  only run on the server which means we  have to throw away some of the baggage  we have in our brains of a component is",
-      "content_length": 911,
-      "content_tokens": 198
-    },
-    {
-      "title": "my-stack-is-changing.txt-41",
-      "content": "a thing that the client runs because it  isn't always that also means a lot of  the tools we use to get data 2  components aren't as useful as they used  to be the big elephant in the room is  trpc and the question that I don't have  a good answer to yet is what happens to  trpc post server components  this is a tough question and I've been  thinking a lot about it you can use trpc  with server components there's a lot of  cool ways you can do it I've actually  played with some of them server side  calls here you can make a caller in trpc  this is telling you not to do it to call  procedures within other procedure which  makes sense but here you can create a  caller for your router that allows you  to make calls to trpc without having to  go over HTTP which means if you already  have a trpc router in your code base and",
-      "content_length": 830,
-      "content_tokens": 196
-    },
-    {
-      "title": "my-stack-is-changing.txt-42",
-      "content": "all you want is to call those same  functions and server components without  having to go over an HTTP or boundary  you can use the caller and this is  effectively the same as just directly  calling the function because it's  running on the same machine it's just  another way to call your trpc stuff  without having the additional latency of  a server in between and this is very  very powerful there's also a pattern  that I've been playing with more and  more outside of server components the  SSG helper that they have in Mac  or for next in trpc which lets you ahead  of time fetch specific things using the  proxy SSG helper so here we're wait  awaiting ssg.post.biid prefetch we're  prefetching this post using the ID we  get from the static prop definition we  pass in dehydrated SSG helper as props  and now on the client there isn't the",
-      "content_length": 846,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-43",
-      "content": "loading state for this query because  this query is pre-hydrated and already  exists but we still have all of the  invalidation patterns that exist inside  of react query so if we want to update  this post because you click the like  button we want to update it we can hit  that same query client cache and have  the ability to update all of that data  there is going to be some combination of  all of these pieces that allows for the  trpcdx we know and love to be aligned  with and combined with the new caching  systems that are being introduced in  react server components and next to  allow us to have a good experience  writing and calling functions in our  client components our server components  and our applications that aren't  necessarily either be it a different  like a TV app for example where we can't  use react server components or mobile  app where react native for Server  components isn't quite there just yet",
-      "content_length": 930,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-44",
-      "content": "the power of what this enables is super  cool but honestly  you don't need this for the data  fetching too often having a better  reliable cache layer could be cool but I  think that's going to come from next  anyways what I'm more scared of is how  are we going to deal with mutations  there is still no mutation RFC from the  react server components and next.js team  I'll be honest I've seen a little bit  and it looks good but it doesn't give us  the wins that I'm used to from trpc  specifically the validation of inputs  when the server or when a user fires a  query being able to validate the data in  the shape of it before I even start  running my function when you use  Primitives like form data in traditional  get and post requests with bodies you  don't have a validation layer guaranteed  you're writing your own validation layer  for everything which means that you're",
-      "content_length": 883,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-45",
-      "content": "blind on both sides when I post to an  endpoint or run a mutation that is  expecting form data I don't know the  type that that expects because I'm just  throwing in a pile of data I don't have  a validation layer to infer the type  either from so I don't have anything  beyond what I roll myself for every  single function to guarantee that the  shape of things is what I expect on both  sides and it feels like we're going to  have a graphql type problem again where  people start defining schemas in between  their server functions and their client  to make sure the relationship between  this all is correct and the spicy take I  don't know why like this isn't said  enough and it honestly it kind of hit me  like a truck when I thought of it  mutations are a client-side problem  server components don't run on client  they're not a client-side problem server",
-      "content_length": 864,
-      "content_tokens": 194
-    },
-    {
-      "title": "my-stack-is-changing.txt-46",
-      "content": "components actually take something that  we've kind of unintentionally forced to  be a client-side problem and get it out  of the client which is dope but  mutations are still very much a  client-side problem and as such the  react server component patterns don't  help us here at all in fact they make it  a bit harder because we currently rely  on react context as the API to wrap our  application in trigger updates when  mutations happen to keep things in sync  you can't do a global react context  provider anymore because context breaks  over server component boundaries if we  wrap our app in a or in a context it's  going to die as soon as it hits a server  component which is going to be probably  immediately because you're wrapping the  top of your app with it we can't use the  patterns we're used to and that sucks  there will be new patterns I've already",
-      "content_length": 868,
-      "content_tokens": 189
-    },
-    {
-      "title": "my-stack-is-changing.txt-47",
-      "content": "seen what some of them look like use SWR  as using some of them and I'm building  things on top of it right now to make it  work but the current react query pattern  of of context heavy updates is  unrealistic in server components we're  gonna have to break those off into  another thing totally doable totally  fine I see people saying you can wrap  individual components in context and it  will be shared no it won't it'll be  shared from that component down but  won't be shared across all of them if  you have an external store that they're  all synchronizing through it can if you  set up your subscriptions and updates  correctly but that's that's a lot of  work to do and that's not realistic no  it's just it's not a realistic path I  see people saying what about getting  data from server side hydrating it into  react query and then using mutations",
-      "content_length": 858,
-      "content_tokens": 192
-    },
-    {
-      "title": "my-stack-is-changing.txt-48",
-      "content": "that's what we do right now with trpc  and create T3 app especially if you use  the static site generation helper I  showed earlier it's good but it's not  the same good experience that we have  with server components obviously we're  gonna see endless PHP jokes that's never  going to stop but I think PHP doesn't  have is a cache layer if I query some  data in PHP I can't really update it  without refreshing the whole page all of  these these new Solutions have really  good ways to update their data and  handle caching on the client it's so  cool what server components enable and  how much simpler they make developer  experience for so many things I'm sold  server components are the future and it  is a much better way to do a lot of  things in your react applications I'm  nowhere near a sole of mutations yet  which means there is some room here this",
-      "content_length": 861,
-      "content_tokens": 190
-    },
-    {
-      "title": "my-stack-is-changing.txt-49",
-      "content": "is set and done if I was the one way I  could characterize this is  the spaces it exists right now there's a  spectrum of I'll say data fetching and  data data updating on the left side here  we have like a text file in your code  base Json config file and code base  something a little further along would  be like some value from DB oh I get  crazy into updating land like the  furthest along here would be like web  socket Streaming new data just  constantly getting updates and changing  the contents of the page want to guess  those updates we can have something a  little more reasonable like liking uh  post and triggering DB update it's a  rough spectrum and I'm sure people are  going to debate this endlessly but like  this is one way of thinking about  queries versus mutations I would argue  that they're all a spectrum and it's a  spectrum of how often do these things",
-      "content_length": 881,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-50",
-      "content": "change and how much do I want to think  about those changes on the client what I  want to do now is draw this line like  like where do the tools help us so if I  go back to the OG get status or get  server side props  get server-side props helps us yeah I'd  say right about to here when we're  getting values from DB it can help us  with that but if we want to update those  values when something else happens in  our app it doesn't actually help with  any of that at all here is where gssp  helps and then here is where trpc helps  trpc and react query help a ton in this  space here everything after the first  paint when we want to start like  updating things on the client like trbc  and react query take over from there and  generally what I've recommended is doing  as little of this as possible in favor",
-      "content_length": 811,
-      "content_tokens": 191
-    },
-    {
-      "title": "my-stack-is-changing.txt-51",
-      "content": "of Leaning into trpc in react query so  your update layer your mutations and all  of those types of things will be easier  to deal with although I will say there's  a point further along here where once  you're updating things constantly like  you can use trpc in the use subscription  stuff but it doesn't have a great back  and forth pattern and once you start  posting through the socket as well there  are better Solutions none that I'm  confident enough to name but like in  here I would expect some type of  websocket solution we're going to ignore  that not going forward because you can  do it with trpc but I just wanted to  point out that there's a level at which  your updates are happening fast enough  that you want to rethink these things so  where stuff gets interesting with app  router is these lines are now defined  pretty differently this goes a lot  further along although right now it",
-      "content_length": 906,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-52",
-      "content": "stops basically right before this  triggered update happens however there's  a point here I probably should have  mentioned before of post updating when a  light occurs on client for me there's a  line between the thing on client  updating or in the thing the user  triggered running on the server and  these are these are different things  there's a relationship between them this  one is much more heavy on client and  updating this one's much heavier on data  fetching because this depends on how the  data fetching occurred I see confusion  about app router next  js13 app router app router is the  official term for the app directory when  people keep saying next 13 what they're  referring to is the app router when they  say can create T3 app support next 13 we  already support next 13 we have since  day one the app router is the new beta  feature this is the name for it that's",
-      "content_length": 887,
-      "content_tokens": 190
-    },
-    {
-      "title": "my-stack-is-changing.txt-53",
-      "content": "what we're calling it app router is the  thing in next 13. so the new cache  primitive in next and react makes  updating this when a change occurs much  easier because you can invalidate the  cache on a specific key they don't  actually have an example in here but one  of the things I know exists I've seen it  in source code public is an actual like  cache helper function that you wrap  things with it doesn't show it in here  but when you fetch you can fetch with a  tag or a set of tags at any point you  can revalidate a tag to update it and  that cache layer the ability to trigger  granular updates on client is a very  important part of the workflow here and  I do think next 13 supports this well  enough from what I've seen what they're  working on I think the actual cache  updating on client side is something  that next handles well and this",
-      "content_length": 855,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-54",
-      "content": "significantly moves this line with next  13 everything in this section becomes  more accessible more type safe easier to  work with and just a general better  experience but it also kind of widens  the gap between the two it almost feels  like there's a no man's land between  these areas now where Bridging the Gap  between this client thing that's  triggered and the server cash sucks I  don't know how this is going to be  bridged I've seen proposals I've played  with things but right now this Gap feels  more present than ever I can show an  example actually that's a good call I  have a project I was working on  obviously the tutorial project with a  Mojo but I also rebuilt it inside of the  new server component patterns and what  we'll see here in my compose function so  this file is a client file this is for a  Twitter clone this is the file that",
-      "content_length": 859,
-      "content_tokens": 191
-    },
-    {
-      "title": "my-stack-is-changing.txt-55",
-      "content": "actually lets you post a new tweet and I  had to do a lot more in here than I  would have liked the first thing is I  can't use react query because of black  Apprentice I could but I didn't want to  roll like react query in a client  component and wrap all of that and deal  with all that so I did use SWR for this  I had to make a create post function  this is a client function I had to  Define myself just to do the posting  locally so it takes in a URL which is a  string this is the string for what to  post to and then the ARG which which is  the actual message that I'm trying to  post I then await fetching from the URL  this Json lobbed up guy and then in the  actual component I kinda had to roll my  own optimistic update layer where I have  the SWR mutation with the API post and",
-      "content_length": 791,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-56",
-      "content": "point create post trigger is mutating in  data trigger is how you trigger the  change is mutating is the loading state  for when mutation is occurring and data  is the result if we get back a result I  also have use transition here which is a  new hook react 18 introduces to tell  react hey things are changing don't  update the Dom just yet though wait till  these things are done so I wrap the  actual changes here in a start  transition I do the await for the  trigger first so that I can have a  different loading State before and after  but since I have no way yet of  granularly updating or optimistically  updating my feed to just show that new  post I actually have to wait for the  post to be made and then do a full  router refresh that will then go to the  server say hey I'm assuming all my data  is old give me new data please right now",
-      "content_length": 850,
-      "content_tokens": 192
-    },
-    {
-      "title": "my-stack-is-changing.txt-57",
-      "content": "the server then generates the new data  sends the new jsx new info knew  everything that react needs to update to  the client which then triggers a  client-side update and after that I set  the content which is like your input  field to empty string so it's finally  empty after the loading State what this  looks like if I go to the deployed page  is I post an emoji You Don't See Much  happen there because that's the loading  state  and then it does the router refetch it  still shows that there it was in a  disabled state I'm not showing that  visually I probably should lower the  opacity or something it then goes and  does all the work to post update the  data on client and then finally empties  this input field and shows me the  changes that I made ideally it'd be way  easier to do optimistic updates on the  client and the patterns I've seen for",
-      "content_length": 858,
-      "content_tokens": 192
-    },
-    {
-      "title": "my-stack-is-changing.txt-58",
-      "content": "this haven't been super elegant yet  react query wasn't the best but I had a  good experience for this before not  great but good enough I think we need to  re- entirely reimagine these patterns  now for the experience to continue  improving with this Gap getting even  wider now this component has no idea  about anything that's fetched prior this  has no concept of what data exists on  the page and can be updated in the first  place so from here I can't really do  anything and even the pattern for  writing this mutation is sketchy because  there's no type safety between things so  if I go to app API post route I have a  post schema which is a Zod validator and  I run this odd validator but look at all  of the stuff I have to do before I'm  actually confident I can use the data  that you passed here it's obnoxious and  when we're seeing these new patterns on",
-      "content_length": 869,
-      "content_tokens": 198
-    },
-    {
-      "title": "my-stack-is-changing.txt-59",
-      "content": "server components that are so much  better than anything else like if I just  go to the tweets homepage view here this  is just a component which means it's by  default of server component and in here  I const rows equals awaitdb.execute and  I have the data if you use Prisma here I  can use anything here and I have the  data if I want this to be cached I can  wrap it in the cache primitive and now  once that's officially out and shipped  it's cached it is that simple for data  fetching this level of Simplicity and  elegance is not matched in updating data  and mutating data yet the DX for this is  so good we have to use it it just it's  so much better it almost feels  irresponsible to not however this is the  big however it does widen the Gap both  in DX and relationships between updates  on client and data fetched from server",
-      "content_length": 839,
-      "content_tokens": 191
-    },
-    {
-      "title": "my-stack-is-changing.txt-60",
-      "content": "and that's not something that's been  bridged yet and that scares me and I  don't want to prescribe next 13 app  router and move us away from TR RPC  until it feels like we have a really  good solution for this ever widening Gap  and I think we're getting there what  I've been referring to this Gap as I'm  talking with Dan abramov a bunch about  this is the interaction boundary it's  the point at which your application  becomes interactive and data changes due  to actions users take historically react  has exclusively been an interactive  framework and now it's the opposite  where by default nothing is interactive  you have to Define interaction  boundaries but now that we're defining  those boundaries ourself we have to  build bridges over it and I'm a little  concerned that we aren't there just yet  and I think a lot of the value of the T3  stack in the future is going to be",
-      "content_length": 889,
-      "content_tokens": 197
-    },
-    {
-      "title": "my-stack-is-changing.txt-61",
-      "content": "prescribing better Solutions here while  next app router will be stable in the  near future I am less confident that  these patterns will be established in a  confident enough way for us to  immediately start adopting them but I am  confident we'll get there and a  beginning to think the role of trpc in  the T3 stack here is to prove you can  make an incredible bridge over this Gap  I want us to build the bridge here this  has been keeping me up at night recently  like straight up I want to figure out  how to make DX that Bridges this Gap as  good as the DX of living on either side  of it and we can get there I'm confident  we can but we have to to really think  through the relationship between the  data that we fetch on the server and the  actions our users take on the client and  it is complex it's hard we're going to  have a long fight to get there we're",
-      "content_length": 869,
-      "content_tokens": 199
-    },
-    {
-      "title": "my-stack-is-changing.txt-62",
-      "content": "probably gonna make mistakes along the  way it took four Renditions of react  server components for there to be one  that we really liked I see a debate  going on in chat about but refetching  everything is fine no again I'll show  you the example on the version I've  deployed here nice emojis if I post here  I am posting all you guys see when  posting now  that's quite a bit of time to see an  update and it was slower before too it's  faster now that things are warmed up  even though it's all Edge routed yeah  it's scary I'm not super confident that  this is a gap we can Bridge quickly but  I am confident it's a thing that we can  make better and good optimistic update  patterns in particular as well as more  granular cash and validation are one of  the patterns we've grown to expect and  love here that isn't really the case",
-      "content_length": 837,
-      "content_tokens": 194
-    },
-    {
-      "title": "my-stack-is-changing.txt-63",
-      "content": "just yet in react server component land  that said the amount of wins server  components offer in terms of how we  compartmentalize our code and think  about the dependencies of our components  like the fact that a component can have  data it depends on and get that data  it's just it's it's so powerful I don't  want to let these types of reservations  keep us from embracing these new  patterns if anything I want to take  these challenges and make them the  strengths of what we're building in  create T3 app and in this ecosystem and  I think the future of the T3 stack is  showing you how to do this right again  could be entirely wrong about this  that's what I've been thinking a lot  about so let's summarize the future of  the stack quick Prisma alternatives are  dope I really want to get more of our  compute on the edge and I think prism  alternatives are going to make it way",
-      "content_length": 889,
-      "content_tokens": 198
-    },
-    {
-      "title": "my-stack-is-changing.txt-64",
-      "content": "more easy to do and significantly  improve the performance of applications  for building on T3 stack personal  serials are dope I want to ship one ASAP  but we got a bit of time till we're  there Tailwind next react and ts are  here to stay app directory will be a fun  challenge self hosting off sucks  sometimes alternative Stacks I expect  this to be all the rage throughout the  year I'm already seeing it happen create  O3 app I was 07 app nice create JD app's  been around for a bit side base I'll  throw a bling stack so those aren't  already familiar create 07 app by  automated odd is the homie he does a lot  of tech for like Ludwig he did all  attack for the stream reward stuff great  dude he loves rust and he loves uh svelt  kit but he also loves trpc and a lot of  this if we talk about here so he's taken",
-      "content_length": 820,
-      "content_tokens": 194
-    },
-    {
-      "title": "my-stack-is-changing.txt-65",
-      "content": "a bunch of the crate D3 app Concepts and  built a rust-based CLI for svelt Kit  apps which is really cool bling will  change things  this almost feels like it needs to be a  separate video I'm gonna wait this will  be a spoiler for the inevitable video  I'm doing on bling in the future so I'm  just gonna rant and not type for a sec  the tldr on bling is it's a new syntax  that has been worked on by Tanner  Lindsley Ryan carniato and a bunch of  the Astro and solid start team to make  it easier to write server functions in  your client applications bling is  heavily V based the goal of bling is to  make it easier to write server functions  in your Veet app so you can write server  dollar sign do some stuff and then call  this fetch function on your client with  type safety and everything behaves how",
-      "content_length": 809,
-      "content_tokens": 195
-    },
-    {
-      "title": "my-stack-is-changing.txt-66",
-      "content": "you would expect it's a very powerful  syntax for a consistent shared server  primitive across the entire Veet  ecosystem the only dependency to use  this is Veet so if your stuff can use  Veet you can use bling I know that uh  parasocial metal learnings here and he  actually made it work with a jQuery  stack based on my dumb joke that you  could do it so there's a bling jQuery  example that's out so yeah this will  technically work with everything this is  the pattern that was originally  introduced in a solid start I'm sure  that they were inspired by a bunch of  different things but the goal of the  server dollar sign macro was to give you  a simple syntax that a compiler could  hook into and generate the right backend  files while also giving you as the  developer consistent developer  experience and type safety as we  co-locate our code you kind of think of",
-      "content_length": 874,
-      "content_tokens": 193
-    },
-    {
-      "title": "my-stack-is-changing.txt-67",
-      "content": "this as Like Remix loaders for everyone  with much better syntax and consistent  ways of using the data and it works  great in everything from Astro to DIY V  deployments with a server it's a really  powerful way to access data on your  applications what this reminds me of is  the Veep moment when Veet first happened  we saw Renaissance in JavaScript  Frameworks most of the things we talk  about now were in development before  Veet but few of them made as much sense  to adopt as they did post Veet Veet  enabled us to build things like Astro  like solid and solid start like all the  stuff that the quick team is doing veets  become this really powerful piece that  does so much of the heavy lifting that  it enable us to focus on the other  important parts of the developer  experience and performance and all the  other things we need to build as  JavaScript framework developers what I",
-      "content_length": 893,
-      "content_tokens": 191
-    },
-    {
-      "title": "my-stack-is-changing.txt-68",
-      "content": "see here with bling is a similar  building block for full stack framework  building what I think Veet did for  client-side JavaScript Frameworks bling  does for a full stack of JavaScript  Frameworks this was one of the hardest  things to do before and it went from  nearly impossible to roll yourself to a  package you can install once this is in  a nice stable State and we know more and  more about what can be done with it I  see a future where most things start  with bling and I'm not thinking we're  going to have a bunch of massive new  full stack Frameworks that use bling to  take over react and next I see an  opportunity for us to try insane stuff  using bling as a way to prototype new  ideas and patterns very excited about  the future of what we can see here and I  do think Frameworks will be moving a lot  faster once more of them have the ability to play with and use bling again  this isn't my bling video this is just  me touching on Blaine quick bling is the  future it's gonna enable us to iterate  and innovate a lot faster I think things  are going to be changing super quick  once playing happens so if you'll ask me  about the Chad stack we're talking about  real Stacks boys sorry but uh here we  like to talk about software that ships",
-      "content_length": 1261,
+      "title": "fullstack-standards.docx-0",
+      "content": "ITM - Application Development Standards & Scaling Framework    Introduction    Software is built with the objective of making tedious tasks easier, getting things done faster, more efficiently, and getting more done with less human inputs than otherwise would be the case without technology.    Over the years, UNDP including many UNDP Country Offices, Regional/Central Bureaus (RBx/CBx) and other Business Units have developed and maintained software for many of the same reasons stated above.    A lot of this innovation and applications development activity has successfully addressed corporate needs as well as local business requirements or unique circumstances not necessarily covered and/prioritized by UNDP corporate technology solutions. Nevertheless, some of the applications are to a certain extent overlapping with each other as well as with corporate applications, thus creating duplication and resource inefficiencies.    In addition, applications development throughout the organization had a tendency to take place in a narrow fashion, only focusing of the specific issue the innovation is supposed to resolve at a local level, without the vision that the innovation can have wider benefits across UNDP. Therefore, when promising local applications are identified, it is often found that scaling for the benefit of all of UNDP would incur considerable time and expense to do so given the absence of technical standards and processes.",
+      "content_length": 1449,
+      "content_tokens": 268
+    },
+    {
+      "title": "fullstack-standards.docx-1",
+      "content": "This framework on applications standards and scale-up has therefore been developed to address above issues and to clarify UNDP´s practice as well as support arrangements for applications development.  Purpose    This framework is intended to outline the technical standards and processes that Country Offices and all UNDP Business Units should follow for application development and will furthermore provide a governance framework for application development in UNDP in accordance with industry standards while balancing the need for a strong corporate direction with possibilities for innovation across business units.    This will allow Business Units to access technical, advisory, and contractual corporate support resources throughout the application’s lifecycle as described in Chapter VI. Failure to follow the guidance in this framework will impede Business Units undertaking development to access said resources.    Business Units following this set standard will allow ITM to scale up local innovations in an efficient and timely manner without having to incur significant time and expenses to do so for the benefit of all of UNDP to harvest and benefit from the efficiencies gained.  An added benefit is the fostering of a developer community of practice focused on collaborative knowledge sharing and retention within a UNDP wide technical community under an ITM umbrella.  Definitions    Full stack development refers to the development of both front end (client side) and back end (server side) portions of an application.    Low code is a software development method that allows colleagues to create fully featured applications with minimal coding.",
+      "content_length": 1663,
       "content_tokens": 292
+    },
+    {
+      "title": "fullstack-standards.docx-2",
+      "content": "With low-code, non-technical users utilize visual point-and-click tools to build, modify and deploy custom software. At the same time, programmers and tech-savvy professionals can extend applications by injecting code. Microsoft PowerApps is an example of such Low Code development platform. Other low code platforms, namely Oracle VBCS, Salesforce APEX, and ServiceNow App Engine, which will be opened up to UNDP Business Units after Quantum implementation.    Azure DevOps is composed of a set of services for teams to share code, track work, and deliver software in a managed and scalable manner. It consists of the following:    Azure Artifacts allow teams to share packages and integrate package sharing into pipelines.   Azure Boards consists of a suite of Agile tools to support planning and tracking work, code defects, and issues using Kanban and Scrum methods.  Azure DevOps collaboration tools includes customizable team dashboards with configurable widgets to share information, progress, and trends, built-in wikis for sharing information, and configurable notifications.  Azure Pipelines provide build-and-release services to support continuous integration and application delivery.  Azure Repos for code source control.  Azure Test Plans consist of several tools to test applications including manual/exploratory testing and continuous testing.    Functional Requirements describes what the system or application shall do, i.e., the UNDP business requirement it will resolve.",
+      "content_length": 1490,
+      "content_tokens": 297
+    },
+    {
+      "title": "fullstack-standards.docx-3",
+      "content": "Wireframing is one of the initial phases in the creation of a digital product and consists of the design of the structure that each of the screens or interfaces of that product will have.    GIT Repository. Git is a software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development, thus the GIT Repository refers to the central storage facility for source codes within this solution.    Information Technology Infrastructure are the components required to operate and manage enterprise IT environments, which includes hardware, software, networking components, an operating system (OS), and data storage, all of which are used to deliver IT services and solutions.    Data classification is the process of analyzing structured or unstructured data and organizing it into categories based on file type, contents, and other metadata.    User authentication is a process that allows a device to verify the identity of someone who connects to a network resource.    Docker Containers. Docker is an open-source containerization platform. It enables developers to package applications into containers—standardized executable components combining application source code with the operating system (OS) libraries and dependencies required to run that code in any environment.    Kubernetes clusters. A set of nodes that run containerized applications. Containerizing applications packages an app with its dependences and some necessary services. They are more lightweight and flexible than virtual machines.",
+      "content_length": 1605,
+      "content_tokens": 296
+    },
+    {
+      "title": "fullstack-standards.docx-4",
+      "content": "In this way, Kubernetes clusters allow for applications to be more easily developed, moved, and managed. Kubernetes clusters allow containers to run across multiple machines and environments: virtual, physical, cloud-based, and on-premises. Kubernetes containers are not restricted to a specific operating system, unlike virtual machines. Instead, they can share operating systems and run anywhere.    ITM COE refers to the ITM Digital Corporate Platforms Application Center of Excellence (CoE), which is the ITM Center tasked with provision of advice to Country Offices and Business Units on applications development.    The Application Development Lifecycle (ADL) typically encompasses a six-step process starting with analysis, then wireframing before moving into design and development followed by deployment and maintenance, as illustrated below:      Scope    The scope of the framework is limited to the development of Full Stack and Low-Code applications to be consumed by UNDP workforce for internal use. Not applicable for website development such as static websites, WordPress websites, etc.    Applications or web properties developed for Programme activities and purposes which will eventually be either terminated or handed over to the partner at the conclusion of a project, are out of scope. For such cases, UNDP should follow technical standards as agreed upon in the Project Document.",
+      "content_length": 1402,
+      "content_tokens": 278
+    },
+    {
+      "title": "fullstack-standards.docx-5",
+      "content": "This POPP does not cover specifics regarding the purchase of Software as a Service (SaaS) subscriptions by a local unit. If a Business Unit wishes to make a SaaS purchase, it should direct a request via UNALL to the Digital Corporate Systems team (ITM COE) for advisory guidance and authorization along with a request to the Chief Information Security Office to perform a security compliance assessment prior to making any commitments or purchase.  Requirements    This section covers the requirements for both full stack as well as low code development and details a set of requirements to be met at all stages of the Application Development Lifecycle (ADL)    Under full-stack development, all steps of the ADL lifecycle must be managed using Azure DevOps.    Application Development should be documented, including governance, functional requirements and a short description of the information technology infrastructure, data classifications, user authentication, periodical review, license management, and related security requirements.    Analysis     Prior to local application development, the application inventory in the ICT Registry should be consulted to verify whether duplication exists with similar solutions in other Country Offices/Business Units, thereby avoiding duplication and waste of resources.",
+      "content_length": 1316,
+      "content_tokens": 248
+    },
+    {
+      "title": "fullstack-standards.docx-6",
+      "content": "Every local application development should furthermore be consulted with the Regional ICT Coordinator in advance, and he/she will make sure that there is no duplication of work with corporate applications or applications already developed locally in other Country Offices/Business Units and in production. He/she will check the following:  If the app can be scaled up to a regional or global solution;   if it can be developed using already present corporate tools;   if it follows basic security principles;   can it be developed as a PowerApp instead of full development, etc.    The functional requirements should include a method or a business case review to establish the business value of an application development (e.g., considering number of end users versus total cost or contribution of the application to achievement of development project objectives) This will however not prevent Business Units to proceed with the start-up of the productivity application as described under 62.    For full-stack development, the specifics in a project should be set adopting an agile development approach with Minimum Viable Product (MVP) success criteria clearly defined.    Wireframing and Design Analysis    Nowadays, many solutions that bore required a full-scale application development, can now be developed using PowerApps and SharePoint. Hence, due consideration should be given to PowerApps and SharePoint as the platform for software development before anything else.    For wireframing, the recommended tool is Figma.",
+      "content_length": 1527,
+      "content_tokens": 297
+    },
+    {
+      "title": "fullstack-standards.docx-7",
+      "content": "Role based access control must be embedded into the design and development of the application for purposes of enforcing data and system restrictions along with privileged access to users. This will allow for the possibility to use the Corporate IDAM application if application is eventually scaled.    When designing an app, it should generally be designed with expectation of scaling up and being used by other Country Office and Business Units.     Accessibility for people with disabilities is an important consideration which must be included when designing applications.    High level concepts to consider when wireframing and designing an application, such as which deployment mechanism to choose:  Application must employ the principle of modularity and reusability via an API first design and architecture.   Description of the requirements for data processing by the applications and data storage within the applications;   Description of the reporting requirements for the newly developed applications (e.g. what are the reporting tools, the benefits, scalability, and infrastructure) All reporting should follow the UNDP corporate data strategy and guidelines.    Development & Deployment    If the Country Office/Business Unit is hiring a developer, they should follow the guidelines on hiring Software developer described under “External contractor/firm guidelines”    Applications that integrate with UNDP systems (authentication, data extraction from or data entry to corporate systems) must pass security evaluation, which is administered by ITM/CISO.",
+      "content_length": 1567,
+      "content_tokens": 292
+    },
+    {
+      "title": "fullstack-standards.docx-8",
+      "content": "Locally developed apps must be hosted on UNDP’s corporate hosting platforms such as Azure. Hosting apps locally, or at developer or at external hosting is not allowed.    Source code of all locally developed apps should be stored in UNDP’s GIT repository.    If Country Office/Business Unit plans to do cost recovery for the application from other offices, UNAll service catalogue is available for this purpose and ITM can assist with recovering the costs leveraging the UNAll eStore.    All locally developed apps should be recorded in ICT Registry, under the application inventory, with a short description about the application including platform and what is does.    For Full-stack applications development, applications should be encapsulated as a container that can be operated independently in either stateful or stateless manners using Docker Containers and will be deployed and orchestrated into Kubernetes clusters.     The following languages will be supported for front end / back-end full-stack development and containerization. Front End: HTML5, CSS3, Java Script, J Query. Back End: PHP, .NET, Python.    The following databases will be supported as part of the application container: MS SQL, MY SQL, Blob Storage.",
+      "content_length": 1229,
+      "content_tokens": 263
+    },
+    {
+      "title": "fullstack-standards.docx-9",
+      "content": "Application development must use Git version control system where the source code is required to be open and accessible to all internal UNDP and hosted on corporate Azure DevOps source code repositories.    Use of corporate identity provider as the source user identity and authentication (Azure AD or B2C) Applications should not develop localized identity stores.    Support      Currently, UNDP ITM supports only the use of Microsoft’s Power Platform at the feature level included with our Microsoft 365 subscription. Therefore, Country Offices embarking on full-stack development must ensure availability of the required capacity, expertise and management oversight throughout the life-time of the application.    Capacity must be planned for at the outset for support, maintenance, and enhancement activities. This structure should use UNALL to log support related activities.    External Contractor/Firm Guidelines    In cases where the Country Office or Business Unit contracts with a vendor or Individual Contractors to develop software, UNDP´s Procurement Rules will be followed, with particular attention being paid to:     The scope of any agreement, including a developer agreement, explains the project and what is required of the parties involved. This section should be detailed because vague explanations give room for misunderstandings of the agreement.",
+      "content_length": 1370,
+      "content_tokens": 266
+    },
+    {
+      "title": "fullstack-standards.docx-10",
+      "content": "This section should address the software development process used, whether the development will a singular stage or phased stages, when the final deliverable shall be made, the length of the developer agreement, and whether the agreement covers further development. Sometimes, further development is covered in a future agreement.    The scope should also include a clear timeline that provides specific timing for certain milestones (or deliverables) A list of consequences related to missing the deadline should be included. Additionally, if there are ancillary items (including cloud services) required for the development, the responsibilities of each party should be explained. Clarity is key when drafting or even reviewing the scope of services. The clearer this portion is written, the easier it can be to navigate the relationship and ensure that deadlines are met.    Technical requirements should, much like the scope, be written clear and easy to understand. This helps UNDP lessen the risk associated with the project. Some of the information in this clause would include whether the developers will have their code reviewed against a certain standard, when payment will occur, detailed software specifications, specific language about how risk will be mitigated, and the costs and risks of the project. When the technical requirements or specifications are not clear, software development could end up costing UNDP more than originally envisaged with software not meeting expectations.    The technical requirements should include the cybersecurity requirements for the system/application.",
+      "content_length": 1603,
+      "content_tokens": 285
+    },
+    {
+      "title": "fullstack-standards.docx-11",
+      "content": "System Performance and acceptance testing measures clause explains the acceptance testing measure for the software that will occur at certain key stages of the development process. This clause should line up with the payment schedule as well as explain that payment occurs when the key stages of the development process are fulfilled and accepted. Additionally, it is helpful to include a timeframe for the performance and acceptance testing measures that explains how long it will take UNDP to get through this process at those stages.    Non-performance clause explains what happens if the developer does not meet the standards listed in the scope, fulfill deadlines, or otherwise present code (or pieces of code) that do not meet the requirements of the project as explained. Non-performance addresses terms that explain how UNDP will move the project from the current developer to another developer. It may also address the resources, processes, and the responsibility involved in moving the project to another developer as well as who will pay the associated costs. Ownership of the intellectual property and other crucial items are also addressed.    Ownership and Intellectual Property. Software is considered intellectual property. A developer agreement should include clear language about the intellectual property rights involved.",
+      "content_length": 1340,
+      "content_tokens": 233
+    },
+    {
+      "title": "fullstack-standards.docx-12",
+      "content": "This includes, and is not limited to, who owns the intellectual property (including who will own any copyrighted material), the steps that will be taken to ensure that UNDP is assigned (or owns) the relevant intellectual property related to the software, if escrow is involved in holding copies of the intellectual property (such as code or data) until a triggering event occurs, and any warranties or indemnities.     Licensing. If UNDP will own the software after it is created, UNDP may need to include a licensing clause that addresses whether the developer is allowed to have a license to use the software after UNDP has obtained all applicable intellectual property rights as well as whether they are allowed to continue to develop the software. A list of events that would result in the license being terminated should also be included.    Both fees and payments should be explicitly addressed in accordance with UNDP´s procurement rules. For example, will UNDP pay reasonable upfront fees? Whether there a specific UNDP will calculate the costs (including fees) for future work on the project, and whether the developer is allowed to stop working if a fee dispute or payment delay occurs, should be clearly addressed in the agreement.",
+      "content_length": 1242,
+      "content_tokens": 244
+    },
+    {
+      "title": "fullstack-standards.docx-13",
+      "content": "Corporate Support Resources    Base Offering    For purposes of quick starting the ADL cycle and to ensure Application sustainability in the long run, ITM will provide on a “no cost recovery” basis to the local unit access and usage to the following set of base resources:  Azure DevOps as outlined in the Definition section.  Corporate Containerization hosted solution to support all categories of scaling.  Hosted pipeline to support continuous integration and deployment of the application.  UNDP mobile app store publishing identity for Apple and Google store.    Access to advisory and support services (scope defined by the table in paragraph number 63) provided by the ITM Digital Corporate Platforms Application Center of Excellence (CoE), hereinafter referred to as the ITM COE.     The ITM COE team is composed of skilled technology professionals whose mission is to provide best practices around application development. An important goal of a center of excellence is to eliminate inefficiencies and help mature UNDP’s technical capacities. CoE members are responsible for disseminating knowledge about the center's capabilities and providing staff with support for implementing recommended best practices.    The level of support offered on a “no cost recovery” basis will be capped based on a “reasonableness” test.",
+      "content_length": 1328,
+      "content_tokens": 272
+    },
+    {
+      "title": "fullstack-standards.docx-14",
+      "content": "A la cart offering    A large range of SAS services via corporate LTAs are available to be used by CO, RBx, CBx teams to support business function and innovation needs.     UNDP has agreements with Microsoft and Amazon AWS to leverage cloud subscriptions to the following services: Blockchain, Machine Learning / Artificial Intelligence, Internet of Things, Robotic Process Automation, Big Data, and many more.    The Country Office /Business Unit should place the request to the UNAll estore following a dialogue with the Digital Corporate Platforms team within ITM for advisory and procurement assistance.    The acquisition and yearly subscription costs for the “a la carte” offerings will be borne by the Country Office /Business Unit.      Application Categorization    Application scaling is embedded into the platform and supported during the entire life cycle of the application. Applications are categorized based on a specific set of attributes and each category will be entitled to a specific set of allocated technical capacity.    Applications will be categorized as follows:  Productivity:   Often addressing local needs and used by a single country office or unit.  Does not require a high level of governance and oversight.  Built and supported by an individual citizen developer.  Important:  Adopted and used by many country offices or units.  Of medium complexity and scoped to support an entire business unit (country, region, bureau)",
+      "content_length": 1454,
+      "content_tokens": 297
+    },
+    {
+      "title": "fullstack-standards.docx-15",
+      "content": "Authorized to integrate with other corporate platforms.  Corporate Critical:  Adopted by large number of offices and endorsed by HQ ITM governance group as a corporate application.   Mission critical highly complex application designed for organization wide usage.    Technical Capacity Allocation    The following table depicts the technical capacity allocated and some key processes elements to be followed for each category of applications.        Containerized Resources  Design & Development  Peer Review  Change Control  Support  Productivity  Limited CPU, RAM, Storage allocations.  Lead by local developers & business owners  None  None or local rules  Provided locally  Important  Expanded CPU, RAM, Storage allocations.  Lead by local developers & business owners  Design & Development reviewed by ITM CoE  Follows corporate change control standards  Provided locally  Corporate / Critical  Corporate level of CPU, RAM, Storage allocations.  Co-development and design between CoE team & local developers & business owners  Embedded in Design and Development  Follows corporate change control standards  Provided by ITM Global Service Desk    Application Owner’s Responsibility    Commitment to the completion, ongoing maintenance, and sunsetting of the application including but not limited to:  Allocated development resources (people, time, budget)  Designated business owner(s)/partner(s)  Engage and ensure stakeholder participation.",
+      "content_length": 1447,
+      "content_tokens": 291
+    },
+    {
+      "title": "fullstack-standards.docx-16",
+      "content": "Participate and achieve required skills/certifications to meet the application requirements.  Allocated support resources to ensure the day-to-day wellbeing and the evolution of the application.  Suspend/cancel/retire inactive projects or applications.    Making effort to collaborate, extend, and reuse existing project(s) which share functionality commonalities.    Provide clear and extensive documentation of the application including overall design documentation, source code commenting, API specifications, and application usage guide.",
+      "content_length": 541,
+      "content_tokens": 101
     }
   ]
 ]

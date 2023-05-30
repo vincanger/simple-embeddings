@@ -16,6 +16,9 @@ app embeddings {
   dependencies: [
     ("openai", "3.2.1"),
     ("gpt-3-encoder", "^1.1.4"),
+    ("mammoth", "1.5.1"),
+    ("pdf-parse", "1.1.1"),
+    ("@types/pdf-parse", "1.1.1"),
     ("@pinecone-database/pinecone", "0.1.6"),
   ],
   title: "embeddings"
