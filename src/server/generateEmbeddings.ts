@@ -8,6 +8,9 @@ import type { Vector } from '@pinecone-database/pinecone';
 import type { GenerateEmbeddings } from '@wasp/actions/types';
 import type { GetFilesToEmbed } from '@wasp/queries/types';
 
+import { ChromaClient } from 'chromadb';
+const chroma = new ChromaClient({ path: 'http://localhost:8000' });
+
 /**
  * this is the max number of tokens we want to chunk the text into
  * before we create an embedding for it. You can play around with this
