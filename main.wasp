@@ -1,10 +1,8 @@
-app embeddings {
+app __waspAppName__ {
   wasp: {
-    // version: "__waspVersion__"
-    version: "^0.10.3"
+    version: "__waspVersion__"
   },
-  // title: "__waspProjectName__",
-  title: "embeddings",
+  title: "__waspProjectName__",
   db: { 
     system: PostgreSQL,
     seeds: [

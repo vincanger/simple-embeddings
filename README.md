@@ -1,5 +1,5 @@
 <div align="center">
-  <img src='./embeddings-client.png' width='600px'/>
+  <img src='./embeddings-client.png' width='750px'/>
 </div>
 
 # What is it?
@@ -34,6 +34,6 @@
 6. Run `wasp start`. This will install all dependencies and start the client and server for you :)
 7. Go to `localhost:3000` in your browser (your NodeJS server will be running on port `3001`). The client will be running with a notice that no embeddings have been generated yet.
 8. Run `wasp db seed` to generate embeddings from the text files within `src/shared/docs` (you can add your own files here) and seed the databases via the `generateEmbeddings` action. 
-9. Run `wasp db studio` to see the data in your Postgres database. You can also use the [Pinecone Console](https://www.pinecone.io/console) to see the embeddings in your Vector DB.
+9. Run `wasp db studio` to see the data in your Postgres database. 
 9. Install the Wasp extension for VSCode to get the best DX
 10. Check the files for comments containing specific instructions
